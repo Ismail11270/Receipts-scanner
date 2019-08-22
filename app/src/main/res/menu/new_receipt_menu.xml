@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/addImage"
+        android:title="New Image"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_action_image"/>
+    <item
+        android:id="@+id/settings"
+        android:title="Settings"
+        />
+
+    <item
+        android:id="@+id/save_data"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="Save Data"
+        app:showAsAction="always" />
+</menu>

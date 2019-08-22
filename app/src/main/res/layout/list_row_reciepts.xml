@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#37AEE4"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:layout_margin="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <EditText
+            android:id="@+id/product_name"
+            android:layout_width="359dp"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:enabled="false"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="5dp"
+            android:text="Product Name"
+            android:textColor="#CCC8C8"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <CheckBox
+            android:id="@+id/product_checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_gravity="end" />
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:columnCount="3">
+
+        <!--Price per 1-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:text="Price"
+            android:textAlignment="center"
+            android:textColor="#CCC8C8"
+
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:enabled="false"
+            android:text="1.0"
+            android:textAlignment="center"
+            android:textColor="#CCC8C8"
+            android:textSize="20sp" />
+
+
+        <!--Amount-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:paddingEnd="20dp"
+            android:text="Amount"
+            android:textAlignment="textEnd"
+            android:textColor="#CCC8C8"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/product_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:enabled="false"
+            android:text="1.0"
+            android:textAlignment="textEnd"
+            android:textColor="#CCC8C8"
+            android:textSize="20sp" />
+
+
+        <!--Total cost-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:text="Total Cost"
+            android:textAlignment="textEnd"
+            android:textColor="#CCC8C8"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/product_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:enabled="false"
+            android:text="1.0"
+            android:textAlignment="textEnd"
+            android:textColor="#CCC8C8"
+            android:textSize="20sp" />
+
+    </GridLayout>
+</LinearLayout>
