@@ -40,6 +40,7 @@ public class ReceiptDataExtractor {
 
     public ReceiptDataExtractor(SparseArray<TextBlock> items, Market market) {
         this.items = items;
+        this.market = market;
         productsList = new ArrayList<>();
         wordsList = new ArrayList<>();
         dataEntries = new TreeMap<>();
@@ -135,16 +136,28 @@ public class ReceiptDataExtractor {
             System.out.println(i + " " + j + " " + k);
             if (Math.abs(nameKey[i] - amountKey[j]) < 70 && Math.abs(amountKey[j] - priceKey[k]) < 70) {
                 String name = namesMap.get(nameKey[i]);
-                float amount = Float.parseFloat(amountsMap.get(amountKey[j]).replace(',', '.'));
-                float price = Float.parseFloat(pricesMap.get(priceKey[k]).replace(',', '.'));
+                float amount,price;
+                try {
+                    amount = Float.parseFloat(amountsMap.get(amountKey[j]).replace(',', '.'));
+                    price = Float.parseFloat(pricesMap.get(priceKey[k]).replace(',', '.'));
+                }catch (NumberFormatException e){
+                    amount = 0;
+                    price = 0;
+                }
                 products.add(new Product(name, amount, price));
                 i++;
                 j++;
                 k++;
             } else {
                 String name = namesMap.get(nameKey[i]);
-                float amount = Float.parseFloat(amountsMap.get(amountKey[j]).replace(',', '.'));
-                float price = Float.parseFloat(pricesMap.get(priceKey[k]).replace(',', '.'));
+                float amount,price;
+                try {
+                    amount = Float.parseFloat(amountsMap.get(amountKey[j]).replace(',', '.'));
+                    price = Float.parseFloat(pricesMap.get(priceKey[k]).replace(',', '.'));
+                }catch (NumberFormatException e){
+                    amount = 0;
+                    price = 0;
+                }
                 int pos = min(nameKey[i], amountKey[j], priceKey[k]);
 
                 boolean a = false, b = false, c = false;

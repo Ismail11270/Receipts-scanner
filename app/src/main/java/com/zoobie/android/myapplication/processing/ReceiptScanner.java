@@ -180,7 +180,8 @@ public class ReceiptScanner extends AppCompatActivity {
             scannedProductsList = extractor.extractProducts();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            onBackPressed();
+            Toast.makeText(this, "Failed to recognize, please try again", Toast.LENGTH_SHORT).show();
         }
 //        for(Product product : scannedProductsList) System.out.println(product);
 
@@ -296,7 +297,7 @@ public class ReceiptScanner extends AppCompatActivity {
                 Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
             }
 
-        }else onBackPressed();
+        }else if(resultCode == RESULT_CANCELED) onBackPressed();
 
     }
 

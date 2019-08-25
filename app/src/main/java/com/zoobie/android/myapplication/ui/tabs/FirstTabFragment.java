@@ -9,9 +9,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.zoobie.android.myapplication.MainActivity;
 import com.zoobie.android.myapplication.R;
+import com.zoobie.android.myapplication.market.data.Shopping;
+import com.zoobie.android.myapplication.storage.ProductsDB;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 
 /**
@@ -20,6 +28,8 @@ import com.zoobie.android.myapplication.R;
 public class FirstTabFragment extends Fragment {
 
     TextView textView;
+    Button showPurchasesBtn;
+
     public FirstTabFragment() {
         // Required empty public constructor
     }
@@ -29,10 +39,20 @@ public class FirstTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_first_tab,container,false);
+        View view = inflater.inflate(R.layout.fragment_first_tab, container, false);
         textView = view.findViewById(R.id.fragment_textview);
         textView.setText(getArguments().getString("message") + " " + getArguments().getInt("id"));
-        if (getArguments().getInt("id") == 2){
+        showPurchasesBtn = view.findViewById(R.id.showpurchasesbtn);
+        showPurchasesBtn.setOnClickListener(v -> {
+            ProductsDB db = new ProductsDB(getContext());
+            ArrayList<Shopping> shoppings = db.getEveryPurchase();
+            if (shoppings.size() > 0)
+                textView.setText(shoppings.toString());
+            else Toast.makeText(getContext(), "Not purchases yet", Toast.LENGTH_SHORT).show();
+
+
+        });
+        if (getArguments().getInt("id") == 2) {
             textView.setBackgroundColor(Color.GREEN);
         }
         return view;

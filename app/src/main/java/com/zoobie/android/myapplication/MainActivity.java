@@ -2,9 +2,11 @@ package com.zoobie.android.myapplication;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TableLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.zoobie.android.myapplication.adapters.ViewPagerAdapter;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
         requestCameraPermission();
         requestStoragePermission();
     }
@@ -54,6 +57,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestStoragePermission() {
         ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        System.out.println("RESTART");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println("RESUME");
+        Intent intent = getIntent();
+        int a = intent.getIntExtra("page",0);
+        TabLayout.Tab tab = tabLayout.getTabAt(a);
+        tab.select();
     }
 
     private void requestCameraPermission() {
