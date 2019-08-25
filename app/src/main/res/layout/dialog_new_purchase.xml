@@ -7,47 +7,8 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/actionBarSize">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/newPurchaseCancelBtn"
-                android:layout_width="@dimen/actionBarSize"
-                android:layout_height="@dimen/actionBarSize"
-                android:background="@color/orange_400"
-                android:src="@android:drawable/ic_menu_close_clear_cancel"
-                android:tint="@android:color/white" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/orange_400"
-                android:gravity="center_vertical"
-                android:text="New Purchase"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textColor="@android:color/white" />
-
-            <Button
-                android:id="@+id/newPurchaseSaveBtn"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@color/orange_400"
-                android:gravity="center"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
-                android:text="SAVE"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
+    <include layout="@layout/dialog_edit_save_appbar"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

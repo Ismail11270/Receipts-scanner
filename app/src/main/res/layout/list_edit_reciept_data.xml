@@ -9,7 +9,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        app:cardElevation="10dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,8 +19,8 @@
             android:layout_marginTop="2dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/productNameEditText"
+            <TextView
+                android:id="@+id/productNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -36,8 +38,8 @@
                 android:gravity="start"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/productAmountEditText"
+                <TextView
+                    android:id="@+id/productAmountTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -54,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
 
-                    android:layout_toRightOf="@id/productAmountEditText"
+                    android:layout_toRightOf="@id/productAmountTextView"
                     android:text="pcs"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:textStyle="bold" />
@@ -70,8 +72,8 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/productPriceEditText"
+                <TextView
+                    android:id="@+id/productPriceTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="50dp"
