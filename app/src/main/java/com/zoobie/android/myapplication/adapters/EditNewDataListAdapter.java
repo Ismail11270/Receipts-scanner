@@ -1,5 +1,7 @@
 package com.zoobie.android.myapplication.adapters;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -8,8 +10,11 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -58,78 +64,52 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = products.get(position);
+        if(product.getName().replace(" ","").length() == 0) product.setName("Product #" + position + 1);
         holder.nameEditText.setText(product.getName());
         holder.priceEditText.setText(product.getPrice() + "");
         holder.amountEditText.setText(product.getAmount() + "");
 
-        holder.itemView.setOnClickListener(v ->{
-            Snackbar.make(parentView,"Press and hold on item to make changes",Snackbar.LENGTH_LONG).show();
-//            Toast.makeText(context, "Press and Hold on item to edit", Toast.LENGTH_SHORT).show();
-        });
-        holder.itemView.setOnLongClickListener(v -> {
-            TextView textView = v.findViewById(R.id.productNameTextView);
-            Toast.makeText(context, "longClicked " + textView.getText().toString(), Toast.LENGTH_SHORT).show();
 
+
+        holder.deleteElementBtn.setOnClickListener(view -> {
+            Product deletedProduct = products.get(position);
+
+            products.remove(position);
+            System.out.println(position + " 1");
+            holder.listElementCardView
+                    .animate()
+                    .alpha(0)
+                    .setDuration(500)
+                    .setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    System.out.println(position + " 2");
+                    holder.listElementCardView.setAlpha(1);
+                    Snackbar.make(parentView, "Item deleted", Snackbar.LENGTH_SHORT)
+                            .setAction("UNDO", v1 -> {
+                                products.add(position, deletedProduct);
+                                notifyDataSetChanged();
+                            }).show();
+                    System.out.println(position + " 3");
+                    notifyDataSetChanged();
+                }
+            });
+
+
+
+        });
+        holder.listElementCardView.setOnClickListener(v ->{
+            Animation animation = AnimationUtils.loadAnimation(context,R.anim.blink);
+            v.startAnimation(animation);
+            Snackbar.make(parentView, "Press and hold on item to make changes", Snackbar.LENGTH_LONG).show();
+        });
+        holder.listElementCardView.setOnLongClickListener(v -> {
+//            TextView textView = v.findViewById(R.id.productNameTextView);
+//            Toast.makeText(context, "longClicked " + textView.getText().toString(), Toast.LENGTH_SHORT).show();
             showEditProductDialog(v,position);
 
             return true;
         });
-//        holder.nameEditText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                products.get(position).setName(editable.toString());
-//            }
-//        });
-//        holder.priceEditText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                System.out.println(charSequence.toString());
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                if (editable.length() > 0) {
-//                    try {
-//                        products.get(position).setPrice(Float.parseFloat(editable.toString()));
-//                    }finally {
-//
-//                    }
-//                }
-//            }
-//        });
-//        holder.amountEditText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                if (editable.length() > 0)
-//                    products.get(position).setAmount(Float.parseFloat(editable.toString()));
-//            }
-//        });
-
     }
 
     private void showEditProductDialog(View clickedView, int position) {
@@ -149,29 +129,27 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
         ImageButton cancelBtn = editProductDataDialog.findViewById(R.id.dialogCancelBtn);
         Button saveBtn = editProductDataDialog.findViewById(R.id.dialogSaveBtn);
 
-        TextView productNameTextView = clickedView.findViewById(R.id.productNameTextView);
-        TextView productPriceTextView = clickedView.findViewById(R.id.productPriceTextView);
-        TextView productAmountTextView = clickedView.findViewById(R.id.productAmountTextView);
 
-        EditText productNameEditText = editProductDataDialog.findViewById(R.id.productNameTextView);
-        productNameEditText.setText(productNameTextView.getText().toString());
+        EditText productNameEditText = editProductDataDialog.findViewById(R.id.productNameEditText);
+        productNameEditText.setText(products.get(position).getName());
 
         EditText priceEditText = editProductDataDialog.findViewById(R.id.priceEditText);
-        priceEditText.setText(productPriceTextView.getText().toString());
+        String price = Float.toString(products.get(position).getPrice());
+        priceEditText.setText(price);
 
         EditText amountEditText = editProductDataDialog.findViewById(R.id.amountEditText);
-        amountEditText.setText(productAmountTextView.getText().toString());
+        String amount = Float.toString(products.get(position).getAmount());
+        amountEditText.setText(amount);
 
 
         cancelBtn.setOnClickListener(v -> editProductDataDialog.dismiss());
 
         saveBtn.setOnClickListener(v -> {
-            productNameTextView.setText(productNameEditText.getText().toString());
-            productPriceTextView.setText(priceEditText.getText().toString());
-            productAmountTextView.setText(amountEditText.getText().toString());
-
-            editProductDataDialog.dismiss();
+            products.get(position).setAmount(Float.parseFloat(amountEditText.getText().toString()));
+            products.get(position).setName(productNameEditText.getText().toString());
+            products.get(position).setPrice(Float.parseFloat(priceEditText.getText().toString()));
             this.notifyItemChanged(position);
+            editProductDataDialog.dismiss();
         });
 
 
@@ -187,11 +165,13 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nameEditText, amountEditText, priceEditText;
-
-
+        public ImageButton deleteElementBtn;
+        public CardView listElementCardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            listElementCardView = itemView.findViewById(R.id.listElement);
             nameEditText = itemView.findViewById(R.id.productNameTextView);
+            deleteElementBtn = itemView.findViewById(R.id.removeListElementBtn);
             amountEditText = itemView.findViewById(R.id.productAmountTextView);
             priceEditText = itemView.findViewById(R.id.productPriceTextView);
         }
@@ -256,6 +236,7 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
             Shopping shopping = new Shopping(
                     0, market.getId(), date, addressEditText.getText().toString(),
                     commentEditText.getText().toString(), products);
+            System.out.println(products.toString());
             ProductsDB db = new ProductsDB(context);
             db.addNewShopping(shopping);
             Intent intent = new Intent(context, MainActivity.class);

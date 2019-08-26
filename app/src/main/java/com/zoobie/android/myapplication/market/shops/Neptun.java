@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class Neptun extends Market {
     private final String PRODUCT_NAME_KEYWORDS[] = {"mehsulun","mehsulunadi","mehsulun adi"};
     private final String PRODUCT_AMOUNT_KEYWORDS[] = {"miq","mlq","miq.","mq","mig","mig."};
-    private final String PRODUCT_PRICE_KEYWORDS[] = {"qiy","qly","qiy.","qly.","qy","aiy.","aiy"};
+    private final String PRODUCT_PRICE_KEYWORDS[] = {"qiy","qly","qiy.","qly.","qy","aiy.","aiy","aly."};
     private final String LOWER_LIMIT_KEYWORDS[] = {"TOPKDV"};
     private final int ID = ShopsData.NEPTUN_ID;
     public int getId(){

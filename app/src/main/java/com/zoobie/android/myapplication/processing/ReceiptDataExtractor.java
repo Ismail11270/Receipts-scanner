@@ -74,7 +74,7 @@ public class ReceiptDataExtractor {
             throw new NullPointerException("Failed to recognize data. Columns undetected");
         sb = new StringBuilder();
         //get text from sb until there is no text left
-        String lines = "";
+        String name = "";
 
         pricesMap = new TreeMap<>();
         amountsMap = new TreeMap<>();
@@ -88,7 +88,7 @@ public class ReceiptDataExtractor {
 
             for (Text word : line.getComponents()) {
                 if (word.getCornerPoints()[1].x < productAmount.getCornerPoints()[0].x && word.getCornerPoints()[0].y > productName.getCornerPoints()[2].y) {
-                    lines += word.getValue() + " ";
+                    name += word.getValue() + " ";
                     foundName = true;
                     tempName = word;
                 } else if (word.getCornerPoints()[0].x > productPrice.getCornerPoints()[0].x - 50
@@ -105,8 +105,8 @@ public class ReceiptDataExtractor {
             }
             if (foundName) {
 //                System.out.println(lines);
-                namesMap.put(tempName.getCornerPoints()[0].y, lines);
-                lines = "";
+                namesMap.put(tempName.getCornerPoints()[0].y, name);
+                name = "";
                 foundName = false;
             }
         }

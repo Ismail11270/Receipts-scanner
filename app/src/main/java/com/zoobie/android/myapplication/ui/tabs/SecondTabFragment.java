@@ -44,8 +44,6 @@ public class SecondTabFragment extends Fragment {
 
         addFab.setOnClickListener((v) -> {
             handleFab();
-
-
         });
         galleryFab.setOnClickListener((v)->{
             Intent intent = new Intent(getContext(), ReceiptScanner.class);
@@ -58,6 +56,19 @@ public class SecondTabFragment extends Fragment {
             startActivityForResult(intent, REQUEST_CODE_ADD_NEW_RECEIPT);
         });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (fabActive) {
+            addFab.animate().rotation(45.f + 180.f).setDuration(0);
+            fabActive = true;
+            initHiddenViews(cameraView);
+            initHiddenViews(galleryView);
+            fabActive = false;
+        }
+
     }
 
     private void handleFab() {

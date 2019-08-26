@@ -36,10 +36,12 @@ public class Product {
 
     public void setAmount(float amount) {
         this.amount = amount;
+        this.cost = this.amount * this.price;
     }
 
     public void setPrice(float price) {
         this.price = price;
+        this.cost = this.amount * this.price;
     }
 
     @Override

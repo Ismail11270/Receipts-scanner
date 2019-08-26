@@ -16,4 +16,5 @@
     <string name="dialog_title_product_data">Product Data</string>
     <string name="product_name_textview">Product Name:</string>
     <string name="product_name_edittext_hint">Product Name...</string>
+    <string name="remove_list_element">Remove list element</string>
 </resources>
