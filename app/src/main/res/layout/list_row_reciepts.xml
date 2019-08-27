@@ -1,122 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<com.balysv.materialripple.MaterialRippleLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#37AEE4"
-    android:orientation="vertical"
-    android:padding="8dp"
-    android:layout_margin="10dp">
+    android:layout_height="?attr/listPreferredItemHeightLarge"
+    android:background="@color/amber_500"
+    app:mrl_rippleColor="@color/grey_200"
+    >
 
-    <LinearLayout
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/receiptListElement"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <EditText
-            android:id="@+id/product_name"
-            android:layout_width="359dp"
-            android:layout_height="wrap_content"
+        android:layout_height="?attr/listPreferredItemHeightLarge"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp">
 
-            android:layout_weight="1"
-            android:enabled="false"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="5dp"
-            android:text="Product Name"
-            android:textColor="#CCC8C8"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <CheckBox
-            android:id="@+id/product_checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            <TextView
+                android:id="@+id/storeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:paddingHorizontal="5dp"
+                android:text="Store name and address"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            android:layout_gravity="end" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/receiptDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/storeName"
+                android:layout_marginHorizontal="6dp"
+                android:paddingHorizontal="5dp"
+                android:text="01-01-1999 00:00"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/amber_500" />
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/storeName"
+                android:layout_toRightOf="@id/receiptDate">
 
-        android:columnCount="3">
+                <TextView
+                    android:id="@+id/receiptTotalAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="35.55$"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/holo_red_light" />
+            </RelativeLayout>
 
-        <!--Price per 1-->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:text="Price"
-            android:textAlignment="center"
-            android:textColor="#CCC8C8"
-
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/product_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:enabled="false"
-            android:text="1.0"
-            android:textAlignment="center"
-            android:textColor="#CCC8C8"
-            android:textSize="20sp" />
+            <View
+                android:layout_width="300dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/receiptDate"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp"
+                android:background="@color/grey_500" />
+        </RelativeLayout>
 
 
-        <!--Amount-->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:paddingEnd="20dp"
-            android:text="Amount"
-            android:textAlignment="textEnd"
-            android:textColor="#CCC8C8"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/product_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:enabled="false"
-            android:text="1.0"
-            android:textAlignment="textEnd"
-            android:textColor="#CCC8C8"
-            android:textSize="20sp" />
-
-
-        <!--Total cost-->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:text="Total Cost"
-            android:textAlignment="textEnd"
-            android:textColor="#CCC8C8"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/product_cost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:enabled="false"
-            android:text="1.0"
-            android:textAlignment="textEnd"
-            android:textColor="#CCC8C8"
-            android:textSize="20sp" />
-
-    </GridLayout>
-</LinearLayout>
+    </androidx.cardview.widget.CardView>
+</com.balysv.materialripple.MaterialRippleLayout>

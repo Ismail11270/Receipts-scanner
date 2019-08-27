@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Shopping {
+public class Receipt {
     public String getAddress() {
         return address;
     }
@@ -30,6 +30,7 @@ public class Shopping {
         return description;
     }
 
+    public float getTotal() { return total; }
     public PurchaseType getType() {
         return type;
     }
@@ -52,10 +53,10 @@ public class Shopping {
     private PurchaseType type;
     private float total;
     private int uniqueStoreId;
-    private Shopping(){
+    private Receipt(){
 
     }
-    public Shopping(int ID, int STORE_ID, Timestamp date, String address, String description, ArrayList<Product> products) {
+    public Receipt(int ID, int STORE_ID, Timestamp date, String address, String description, ArrayList<Product> products) {
         this.type = PurchaseType.SHOPPING;
         this.description = description;
         this.ID = ID;
@@ -66,7 +67,7 @@ public class Shopping {
         this.total = 0;
     }
 
-    public Shopping(int uniqueStoreId, int storeId, Timestamp date, String address, String comment, float total){
+    public Receipt(int uniqueStoreId, int storeId, Timestamp date, String address, String comment, float total){
         this.uniqueStoreId = uniqueStoreId;
         this.type = PurchaseType.SHOPPING;
         this.STORE_ID=storeId;

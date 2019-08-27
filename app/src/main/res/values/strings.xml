@@ -17,4 +17,6 @@
     <string name="product_name_textview">Product Name:</string>
     <string name="product_name_edittext_hint">Product Name...</string>
     <string name="remove_list_element">Remove list element</string>
+    <string name="settings">Settings</string>
+    <string name="search">Search</string>
 </resources>

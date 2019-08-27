@@ -3,7 +3,10 @@ package com.zoobie.android.myapplication;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -11,6 +14,7 @@ import android.widget.TableLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.zoobie.android.myapplication.adapters.ViewPagerAdapter;
+import com.zoobie.android.myapplication.market.shops.Currency;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     ViewPagerAdapter adapter;
     TabLayout tabLayout;
+    private SharedPreferences settingsDataSp;
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 400;
     private String cameraPermission[];
@@ -37,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(this.getResources().getColor(R.color.orange_400));
         toolbar = findViewById(R.id.toolBar);
+        toolbar.setNavigationIcon(R.drawable.navigation_icon);
         setSupportActionBar(toolbar);
+        setTitle("");
         cameraPermission = new String[]{
                 Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
         };
@@ -53,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
         requestCameraPermission();
         requestStoragePermission();
+
+
+        settingsDataSp = this.getSharedPreferences("settings",MODE_PRIVATE);
+        settingsDataSp.edit().putInt("currency", Currency.USD.id);
     }
 
 
@@ -78,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestCameraPermission() {
         ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 

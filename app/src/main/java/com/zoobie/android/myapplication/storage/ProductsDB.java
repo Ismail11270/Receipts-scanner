@@ -3,12 +3,11 @@ package com.zoobie.android.myapplication.storage;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.zoobie.android.myapplication.market.data.Product;
-import com.zoobie.android.myapplication.market.data.Shopping;
+import com.zoobie.android.myapplication.market.data.Receipt;
 import com.zoobie.android.myapplication.market.shops.Market;
 
 import java.sql.Timestamp;
@@ -64,8 +63,8 @@ public class ProductsDB {
         }
 
     }
-    public ArrayList<Shopping> getEveryPurchase(){
-        ArrayList<Shopping> shoppings = new ArrayList<>();
+    public ArrayList<Receipt> getEveryPurchase(){
+        ArrayList<Receipt> receipts = new ArrayList<>();
         Cursor c = db.rawQuery("SELECT * FROM shoppings s JOIN shops sh on s.shop_id=sh.rowid ORDER BY date",null);
         int shopIdCl = c.getColumnIndex("id");
         int dateCl = c.getColumnIndex("date");
@@ -74,18 +73,11 @@ public class ProductsDB {
         int totalCl = c.getColumnIndex("total");
         int shopUniqueId= c.getColumnIndex("shop_id");
 
-//        c.moveToFirst();
-//        while(c!=null) {
-//
-//            shoppings.add(new Shopping(c.getInt(shopUniqueId), c.getInt(shopIdCl), new Timestamp(c.getLong(dateCl)), c.getString(addressCl), c.getString(commentCl), c.getFloat(totalCl)));
-//            c.moveToNext();
-//        }
-
         for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-            shoppings.add(new Shopping(c.getInt(shopUniqueId), c.getInt(shopIdCl), new Timestamp(c.getLong(dateCl)), c.getString(addressCl), c.getString(commentCl), c.getFloat(totalCl)));
+            receipts.add(new Receipt(c.getInt(shopUniqueId), c.getInt(shopIdCl), new Timestamp(c.getLong(dateCl)), c.getString(addressCl), c.getString(commentCl), c.getFloat(totalCl)));
         }
         c.close();
-        return shoppings;
+        return receipts;
     }
     public boolean addNewShop(final int SHOP_ID, String address){
         db.execSQL("INSERT INTO shops (id,name,address) VALUES( " + SHOP_ID + ",'" + getShopName(SHOP_ID) + "','" + address + "')");
@@ -106,22 +98,24 @@ public class ProductsDB {
 
     }
 
-    public void addNewShopping(Shopping shopping){
-        Cursor c = db.rawQuery("SELECT rowid FROM shops WHERE address='"+ shopping.getAddress()+"'",null);
+    public void addNewShopping(Receipt receipt){
+        Cursor c = db.rawQuery("SELECT rowid FROM shops WHERE address='"+ receipt.getAddress()+"'",null);
         if(c.getCount() == 0)
         {
-            addNewShop(shopping.getSTORE_ID(), shopping.getAddress());
-            c = db.rawQuery("SELECT rowid FROM shops WHERE address='"+ shopping.getAddress()+"'",null);
+            addNewShop(receipt.getSTORE_ID(), receipt.getAddress());
+            c = db.rawQuery("SELECT rowid FROM shops WHERE address='"+ receipt.getAddress()+"'",null);
         }
         float cost = 0;
-        for(Product product : shopping.getProducts()){
+        for(Product product : receipt.getProducts()){
             cost+=product.getCost();
         }
+        int temp = (int)(cost*100);
+        cost = (float)temp/100;
         c.moveToFirst();
-        db.execSQL("INSERT INTO shoppings (shop_id,date,comment,total) VALUES(" + c.getInt(0) + ","+ shopping.getDate().getTime()+", '"+ shopping.getDescription()+"', "+cost+")");
+        db.execSQL("INSERT INTO shoppings (shop_id,date,comment,total) VALUES(" + c.getInt(0) + ","+ receipt.getDate().getTime()+", '"+ receipt.getDescription()+"', "+cost+")");
         c = db.rawQuery("SELECT MAX(rowid) FROM shoppings",null);
         c.moveToFirst();
-        for(Product product : shopping.getProducts()){
+        for(Product product : receipt.getProducts()){
             insertPurchase(product,c.getInt(0));
             System.out.println(product.getName() + " was saved in the db");
         }

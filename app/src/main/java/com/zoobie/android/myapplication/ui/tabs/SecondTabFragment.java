@@ -7,6 +7,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +16,11 @@ import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zoobie.android.myapplication.R;
+import com.zoobie.android.myapplication.adapters.ReceiptsListAdapter;
 import com.zoobie.android.myapplication.market.data.Product;
+import com.zoobie.android.myapplication.market.data.Receipt;
 import com.zoobie.android.myapplication.processing.ReceiptScanner;
+import com.zoobie.android.myapplication.storage.ProductsDB;
 
 import java.util.ArrayList;
 
@@ -27,6 +32,8 @@ public class SecondTabFragment extends Fragment {
     ArrayList<Product> productsList;
     FloatingActionButton addFab, galleryFab, cameraFab;
     View galleryView, cameraView;
+    ReceiptsListAdapter adapter;
+    RecyclerView recyclerView;
     final int REQUEST_CODE_ADD_NEW_RECEIPT = 101;
     private boolean fabActive = false;
 
@@ -38,7 +45,13 @@ public class SecondTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_second_tab, container, false);
         initializeViews(view);
+        initializeFabs();
+        initializeRecyclerView();
 
+        return view;
+    }
+
+    private void initializeFabs() {
         initHiddenViews(galleryView);
         initHiddenViews(cameraView);
 
@@ -55,12 +68,12 @@ public class SecondTabFragment extends Fragment {
             intent.putExtra("source", ReceiptScanner.PICK_CAMERA);
             startActivityForResult(intent, REQUEST_CODE_ADD_NEW_RECEIPT);
         });
-        return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        adapter.notifyDataSetChanged();
         if (fabActive) {
             addFab.animate().rotation(45.f + 180.f).setDuration(0);
             fabActive = true;
@@ -135,11 +148,17 @@ public class SecondTabFragment extends Fragment {
         galleryView = view.findViewById(R.id.add_from_gallery_view);
         cameraView = view.findViewById(R.id.add_from_camera_view);
         productsList = new ArrayList<>();
+        recyclerView = view.findViewById(R.id.receiptsRecyclerView);
         res = getResources();
     }
 
-    private void initializeListView() {
-
+    private void initializeRecyclerView() {
+        ProductsDB db = new ProductsDB(getContext());
+        ArrayList<Receipt> listOfReceipts = db.getEveryPurchase();
+        adapter = new ReceiptsListAdapter(getContext(),listOfReceipts);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
 }

@@ -13,12 +13,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zoobie.android.myapplication.MainActivity;
 import com.zoobie.android.myapplication.R;
-import com.zoobie.android.myapplication.market.data.Shopping;
+import com.zoobie.android.myapplication.market.data.Receipt;
 import com.zoobie.android.myapplication.storage.ProductsDB;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -45,9 +43,9 @@ public class FirstTabFragment extends Fragment {
         showPurchasesBtn = view.findViewById(R.id.showpurchasesbtn);
         showPurchasesBtn.setOnClickListener(v -> {
             ProductsDB db = new ProductsDB(getContext());
-            ArrayList<Shopping> shoppings = db.getEveryPurchase();
-            if (shoppings.size() > 0)
-                textView.setText(shoppings.toString());
+            ArrayList<Receipt> receipts = db.getEveryPurchase();
+            if (receipts.size() > 0)
+                textView.setText(receipts.toString());
             else Toast.makeText(getContext(), "Not purchases yet", Toast.LENGTH_SHORT).show();
 
 

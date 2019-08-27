@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -19,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -29,7 +27,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.zoobie.android.myapplication.MainActivity;
 import com.zoobie.android.myapplication.R;
 import com.zoobie.android.myapplication.market.data.Product;
-import com.zoobie.android.myapplication.market.data.Shopping;
+import com.zoobie.android.myapplication.market.data.Receipt;
 import com.zoobie.android.myapplication.market.shops.ShopsData;
 import com.zoobie.android.myapplication.storage.ProductsDB;
 import com.zoobie.android.myapplication.market.shops.Market;
@@ -68,7 +66,6 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
         holder.nameEditText.setText(product.getName());
         holder.priceEditText.setText(product.getPrice() + "");
         holder.amountEditText.setText(product.getAmount() + "");
-
 
 
         holder.deleteElementBtn.setOnClickListener(view -> {
@@ -233,12 +230,12 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
             int day = Integer.parseInt(dateString[0]);
             calendar.set(year, month, day, hour, minute);
             Timestamp date = new Timestamp(calendar.getTimeInMillis());
-            Shopping shopping = new Shopping(
+            Receipt receipt = new Receipt(
                     0, market.getId(), date, addressEditText.getText().toString(),
                     commentEditText.getText().toString(), products);
             System.out.println(products.toString());
             ProductsDB db = new ProductsDB(context);
-            db.addNewShopping(shopping);
+            db.addNewShopping(receipt);
             Intent intent = new Intent(context, MainActivity.class);
             intent.putExtra("page", 1);
             context.startActivity(intent);
