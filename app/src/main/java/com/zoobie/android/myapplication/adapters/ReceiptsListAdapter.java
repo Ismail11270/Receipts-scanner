@@ -46,8 +46,9 @@ public class ReceiptsListAdapter extends RecyclerView.Adapter<ReceiptsListAdapte
         String nameAndAdress = ShopsData.getShopName(receipt.getSTORE_ID()) + ", " + receipt.getAddress();
         holder.storeNameAddressTextView.setText(nameAndAdress);
 
-        String dateTime = receipt.getDate().toString();
-        holder.receiptDateTextView.setText(dateTime);
+        String dateTime[] = receipt.getDate().toString().split(".");
+
+        holder.receiptDateTextView.setText(dateTime[0]);
 
         Currency currency = Currency.getCurrencyFromId(settingsDataSp.getInt("currency",1));
         String totalAmount = receipt.getTotal() + " " + currency.getDisplayName();

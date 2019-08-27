@@ -1,27 +1,32 @@
 package com.zoobie.android.myapplication.market.shops;
 
 public enum Currency {
-    USD("USD", 1, 1) {
+    USD("USD", 1, 1, "$") {
 
     },
-    AZN("AZN", 0.6f, 2) {
+    AZN("AZN", 0.6f, 2, "AZN") {
 
     },
-    EUR("EUR", 1.1f, 2) {
+    EUR("EUR", 1.1f, 2, "€") {
 
     };
+
+    public static final Currency DEFAULT_CURRENCY = USD;
 
     private String displayName;
     private float value;
     public int id;
-
-    Currency(String currency, float value, int id) {
+    public String symbol;
+    Currency(String currency, float value, int id,String symbol) {
         this.id = id;
+        this.symbol = symbol;
         this.displayName = currency;
         this.value = value;
     }
 
-
+    public String getSymbol(){
+        return this.symbol;
+    }
     public static Currency getCurrencyFromId(int id) {
         switch (id) {
             case 1:

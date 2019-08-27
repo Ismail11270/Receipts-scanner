@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -96,8 +97,6 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
 
         });
         holder.listElementCardView.setOnClickListener(v ->{
-            Animation animation = AnimationUtils.loadAnimation(context,R.anim.blink);
-            v.startAnimation(animation);
             Snackbar.make(parentView, "Press and hold on item to make changes", Snackbar.LENGTH_LONG).show();
         });
         holder.listElementCardView.setOnLongClickListener(v -> {
@@ -163,7 +162,7 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nameEditText, amountEditText, priceEditText;
         public ImageButton deleteElementBtn;
-        public CardView listElementCardView;
+        public LinearLayout listElementCardView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             listElementCardView = itemView.findViewById(R.id.listElement);

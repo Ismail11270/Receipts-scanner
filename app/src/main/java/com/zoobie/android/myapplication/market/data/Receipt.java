@@ -3,6 +3,7 @@ package com.zoobie.android.myapplication.market.data;
 
 import androidx.annotation.Nullable;
 
+import com.zoobie.android.myapplication.market.shops.Currency;
 import com.zoobie.android.myapplication.market.shops.ShopsData;
 
 import java.sql.Timestamp;
@@ -36,13 +37,7 @@ public class Receipt {
     }
 
     //ToDo when adding different purchase types, only adding receipts possible rn
-    public enum PurchaseType {
-        SHOPPING,
-        ENTERTAINMENT,
-        BILLS_PAYMENT,
-        HEALTHCARE,
-        SIGNLE_PURCHASE
-    }
+
 
     private Timestamp date;
     private int ID;
@@ -52,10 +47,9 @@ public class Receipt {
     private String description;
     private PurchaseType type;
     private float total;
+    private Currency currency;
     private int uniqueStoreId;
-    private Receipt(){
 
-    }
     public Receipt(int ID, int STORE_ID, Timestamp date, String address, String description, ArrayList<Product> products) {
         this.type = PurchaseType.SHOPPING;
         this.description = description;
@@ -84,5 +78,13 @@ public class Receipt {
                 date.toString() + " " +
                 description + " " +
                 total + "$";
+    }
+
+    public enum PurchaseType {
+        SHOPPING,
+        ENTERTAINMENT,
+        BILLS_PAYMENT,
+        HEALTHCARE,
+        SIGNLE_PURCHASE
     }
 }

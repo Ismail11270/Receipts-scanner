@@ -18,15 +18,6 @@ public class ReceiptDataExtractor {
     private SparseArray<TextBlock> items;
     private ArrayList<Product> productsList;
 
-//    @Override
-//    protected void onPostExecute(List<Product> products) {
-//        super.onPostExecute(products);
-//        System.out.println("PIDARAS");
-//        for(Product product : products){
-//            System.out.println(product);
-//        }
-//    }
-
     private StringBuilder sb;
     private Text productName;
     private Text productAmount;
@@ -45,21 +36,25 @@ public class ReceiptDataExtractor {
         wordsList = new ArrayList<>();
         dataEntries = new TreeMap<>();
         dataEntries = new TreeMap<>();
+        boolean first = true, seconds = true, third = true;
         for (int i = 0; i < items.size(); i++) {
             TextBlock myItem = items.valueAt(i);
             for (Text line : myItem.getComponents()) {
                 dataEntries.put(line.getCornerPoints()[0].y, line);
                 for (Text word : line.getComponents()) {
                     Log.i("constructor", word.getValue());
-                    if (market.getProductNameKeywords().contains(word.getValue().toLowerCase())) {
+                    if (market.getProductNameKeywords().contains(word.getValue().toLowerCase()) && first) {
                         this.productName = word;
                         System.out.println(word.getValue() + " found ");
-                    } else if (market.getProductAmountKeywords().contains(word.getValue().toLowerCase())) {
+                        first = false;
+                    } else if (market.getProductAmountKeywords().contains(word.getValue().toLowerCase()) && seconds) {
                         this.productAmount = word;
                         System.out.println(word.getValue() + " found ");
-                    } else if (market.getProductPriceKeywords().contains(word.getValue().toLowerCase())) {
+                        seconds = false;
+                    } else if (market.getProductPriceKeywords().contains(word.getValue().toLowerCase()) && third) {
                         this.productPrice = word;
                         System.out.println(word.getValue() + " found ");
+                        third = false;
                     } else {
                         wordsList.add(word);
                     }
@@ -136,11 +131,11 @@ public class ReceiptDataExtractor {
             System.out.println(i + " " + j + " " + k);
             if (Math.abs(nameKey[i] - amountKey[j]) < 70 && Math.abs(amountKey[j] - priceKey[k]) < 70) {
                 String name = namesMap.get(nameKey[i]);
-                float amount,price;
+                float amount, price;
                 try {
                     amount = Float.parseFloat(amountsMap.get(amountKey[j]).replace(',', '.'));
                     price = Float.parseFloat(pricesMap.get(priceKey[k]).replace(',', '.'));
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     amount = 0;
                     price = 0;
                 }
@@ -150,11 +145,11 @@ public class ReceiptDataExtractor {
                 k++;
             } else {
                 String name = namesMap.get(nameKey[i]);
-                float amount,price;
+                float amount, price;
                 try {
                     amount = Float.parseFloat(amountsMap.get(amountKey[j]).replace(',', '.'));
                     price = Float.parseFloat(pricesMap.get(priceKey[k]).replace(',', '.'));
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     amount = 0;
                     price = 0;
                 }

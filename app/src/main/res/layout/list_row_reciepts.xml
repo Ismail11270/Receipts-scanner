@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<com.balysv.materialripple.MaterialRippleLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/receiptListElement"
     android:layout_width="match_parent"
     android:layout_height="?attr/listPreferredItemHeightLarge"
-    android:background="@color/amber_500"
-    app:mrl_rippleColor="@color/grey_200"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
     >
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/receiptListElement"
+    <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/listPreferredItemHeightLarge"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp">
+        android:layout_height="match_parent"
+>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -68,5 +65,5 @@
         </RelativeLayout>
 
 
-    </androidx.cardview.widget.CardView>
-</com.balysv.materialripple.MaterialRippleLayout>
+    </com.balysv.materialripple.MaterialRippleLayout>
+</androidx.cardview.widget.CardView>
