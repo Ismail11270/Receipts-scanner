@@ -1,4 +1,4 @@
-package com.zoobie.android.myapplication.ui.tabs;
+package com.zoobie.android.myapplication.activity.tabs;
 
 
 import android.graphics.Color;

@@ -1,4 +1,4 @@
-package com.zoobie.android.myapplication.ui.tabs;
+package com.zoobie.android.myapplication.activity.tabs;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -19,7 +19,7 @@ import com.zoobie.android.myapplication.R;
 import com.zoobie.android.myapplication.adapters.ReceiptsListAdapter;
 import com.zoobie.android.myapplication.market.data.Product;
 import com.zoobie.android.myapplication.market.data.Receipt;
-import com.zoobie.android.myapplication.processing.ReceiptScanner;
+import com.zoobie.android.myapplication.activity.ReceiptScanner;
 import com.zoobie.android.myapplication.storage.ProductsDB;
 
 import java.util.ArrayList;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_10"
-    tools:context=".ui.tabs.FirstTabFragment">
+    tools:context=".activity.tabs.FirstTabFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout

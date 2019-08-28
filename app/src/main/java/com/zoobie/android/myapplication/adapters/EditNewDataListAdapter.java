@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,11 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.zoobie.android.myapplication.MainActivity;
+import com.zoobie.android.myapplication.activity.MainActivity;
 import com.zoobie.android.myapplication.R;
 import com.zoobie.android.myapplication.market.data.Product;
 import com.zoobie.android.myapplication.market.data.Receipt;

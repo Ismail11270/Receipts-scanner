@@ -1,4 +1,4 @@
-package com.zoobie.android.myapplication.processing;
+package com.zoobie.android.myapplication.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +37,8 @@ import com.zoobie.android.myapplication.adapters.EditNewDataListAdapter;
 import com.zoobie.android.myapplication.market.data.Product;
 import com.zoobie.android.myapplication.market.shops.Market;
 import com.zoobie.android.myapplication.market.shops.Neptun;
+import com.zoobie.android.myapplication.processing.ReceiptDataExtractor;
+
 import java.util.ArrayList;
 
 

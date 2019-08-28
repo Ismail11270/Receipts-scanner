@@ -1,7 +1,6 @@
 package com.zoobie.android.myapplication.adapters;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.zoobie.android.myapplication.activity.MainActivity;
 import com.zoobie.android.myapplication.R;
 import com.zoobie.android.myapplication.market.data.Receipt;
-import com.zoobie.android.myapplication.market.shops.Currency;
 import com.zoobie.android.myapplication.market.shops.ShopsData;
 
 import java.util.ArrayList;
@@ -22,12 +21,10 @@ public class ReceiptsListAdapter extends RecyclerView.Adapter<ReceiptsListAdapte
 
     private Context context;
     private ArrayList<Receipt> receiptsList;
-    private SharedPreferences settingsDataSp;
 
     public ReceiptsListAdapter(Context context, ArrayList<Receipt> receipts) {
         this.context = context;
         this.receiptsList = receipts;
-        this.settingsDataSp = context.getSharedPreferences("settings",Context.MODE_PRIVATE);
     }
 
 
@@ -46,12 +43,12 @@ public class ReceiptsListAdapter extends RecyclerView.Adapter<ReceiptsListAdapte
         String nameAndAdress = ShopsData.getShopName(receipt.getSTORE_ID()) + ", " + receipt.getAddress();
         holder.storeNameAddressTextView.setText(nameAndAdress);
 
-        String dateTime[] = receipt.getDate().toString().split(".");
+        String dateTime[] = receipt.getDate().toString().split("[.]");
 
         holder.receiptDateTextView.setText(dateTime[0]);
 
-        Currency currency = Currency.getCurrencyFromId(settingsDataSp.getInt("currency",1));
-        String totalAmount = receipt.getTotal() + " " + currency.getDisplayName();
+
+        String totalAmount = receipt.getTotal() + " " + MainActivity.currency.getDisplayName();
         holder.receiptTotalTextView.setText(totalAmount);
         
         holder.itemView.setOnClickListener(view -> {

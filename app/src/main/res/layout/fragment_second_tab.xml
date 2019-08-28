@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/grey_10"
     android:orientation="vertical"
-    tools:context=".ui.tabs.SecondTabFragment">
+    tools:context=".activity.tabs.SecondTabFragment">
 
     <!-- TODO: List receipts-->
 

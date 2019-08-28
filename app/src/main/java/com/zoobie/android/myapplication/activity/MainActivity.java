@@ -1,10 +1,11 @@
-package com.zoobie.android.myapplication;
+package com.zoobie.android.myapplication.activity;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.zoobie.android.myapplication.R;
 import com.zoobie.android.myapplication.adapters.ViewPagerAdapter;
 import com.zoobie.android.myapplication.market.shops.Currency;
 
@@ -38,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private String cameraPermission[];
     private String storagePermission[];
     public static Currency currency = Currency.DEFAULT_CURRENCY;
-    private MenuItem currencyItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +71,10 @@ public class MainActivity extends AppCompatActivity {
         requestStoragePermission();
 
 
-        settingsDataSp = this.getSharedPreferences("settings", MODE_PRIVATE);
-        currency = Currency.getCurrencyFromId(settingsDataSp.getInt("currency", Currency.DEFAULT_CURRENCY.id));
-
+//        settingsDataSp = this.getSharedPreferences("com.zoobie.android.myapplication", MODE_PRIVATE);
+//        currency = Currency.getCurrencyFromId(settingsDataSp.getInt("currency", Currency.DEFAULT_CURRENCY.id));
+//        Log.i("Currency 1",currency.getDisplayName());
+//        System.out.println("Hate it");
     }
 
 
@@ -111,11 +113,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
-            case R.id.currency:
-                currencyItem = item;
-                break;
             case R.id.settings:
-
+                startActivity(new Intent(this,SettingsActivity.class));
                 break;
             case R.id.searchBtnMenu:
 
@@ -126,38 +125,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void onCurrencyChanged(MenuItem item) {
-        int id = item.getItemId();
-        SubMenu currencyMenu = currencyItem.getSubMenu();
-        String confirmationMessage = "The currency has been changed to ";
-        if (R.id.currency_azn == id) {
-            currencyItem.setTitle(Currency.AZN.getSymbol());
-            item.setChecked(true);
-            settingsDataSp.edit().putInt("currency", Currency.AZN.id).apply();
-            Toast.makeText(this, confirmationMessage + Currency.AZN.getDisplayName(), Toast.LENGTH_SHORT).show();
-        } else {
-            MenuItem notClicked = currencyMenu.findItem(R.id.currency_azn);
-            notClicked.setChecked(false);
-        }
 
-        if (R.id.currency_eur == id) {
-            currencyItem.setTitle(Currency.EUR.getSymbol());
-            item.setChecked(true);
-            settingsDataSp.edit().putInt("currency", Currency.EUR.id).apply();
-            Toast.makeText(this, confirmationMessage + Currency.EUR.getDisplayName(), Toast.LENGTH_SHORT).show();
-        } else {
-            MenuItem notClicked = currencyMenu.findItem(R.id.currency_eur);
-            notClicked.setChecked(false);
-        }
-        if (R.id.currency_usd == id) {
-            currencyItem.setTitle(Currency.USD.getSymbol());
-            item.setChecked(true);
-            settingsDataSp.edit().putInt("currency", Currency.USD.id).apply();
-            Toast.makeText(this, confirmationMessage + Currency.USD.getDisplayName(), Toast.LENGTH_SHORT).show();
 
-        } else {
-            MenuItem notClicked = currencyMenu.findItem(R.id.currency_usd);
-            notClicked.setChecked(false);
-        }
-    }
 }

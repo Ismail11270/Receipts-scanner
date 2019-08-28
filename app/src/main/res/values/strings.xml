@@ -23,4 +23,13 @@
     <string name="eur">EUR</string>
     <string name="usd">USD</string>
     <string name="select_currency">Select currency</string>
+
+
+    <string-array name="currencies">
+        <item name="USD">USD</item>
+        <item name="AZN">AZN</item>
+        <item name="EUR">EUR</item>
+    </string-array>
+
+
 </resources>

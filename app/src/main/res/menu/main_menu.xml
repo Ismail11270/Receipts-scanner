@@ -9,41 +9,6 @@
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />
     <item
-        android:id="@+id/currency"
-        android:title="$"
-        app:showAsAction="always"
-        android:orderInCategory="1">
-        <menu>
-            <group
-                android:checkableBehavior="single"
-                android:id="@+id/currency_group"
-                >
-                <item
-                    android:title="@string/select_currency"
-                    android:enabled="false"
-                    android:checkable="false"
-                    android:onClick="onCurrencyChanged"/>
-                <item
-                    android:id="@+id/currency_azn"
-                    android:checkable="true"
-                    android:title="@string/azn"
-                    android:onClick="onCurrencyChanged"/>
-
-                <item
-                    android:id="@+id/currency_eur"
-                    android:checkable="true"
-                    android:title="@string/eur"
-                    android:onClick="onCurrencyChanged"/>
-
-                <item
-                    android:id="@+id/currency_usd"
-                    android:checkable="true"
-                    android:title="@string/usd"
-                    android:onClick="onCurrencyChanged"/>
-            </group>
-        </menu>
-    </item>
-    <item
         android:id="@+id/settings"
         android:title="@string/settings"
         />

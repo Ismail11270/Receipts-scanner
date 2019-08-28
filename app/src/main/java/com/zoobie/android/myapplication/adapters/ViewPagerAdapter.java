@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.zoobie.android.myapplication.ui.tabs.FirstTabFragment;
-import com.zoobie.android.myapplication.ui.tabs.SecondTabFragment;
+import com.zoobie.android.myapplication.activity.tabs.FirstTabFragment;
+import com.zoobie.android.myapplication.activity.tabs.SecondTabFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
