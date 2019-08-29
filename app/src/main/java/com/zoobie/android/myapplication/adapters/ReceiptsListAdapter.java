@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zoobie.android.myapplication.activity.MainActivity;
@@ -50,9 +53,12 @@ public class ReceiptsListAdapter extends RecyclerView.Adapter<ReceiptsListAdapte
 
         String totalAmount = receipt.getTotal() + " " + MainActivity.currency.getDisplayName();
         holder.receiptTotalTextView.setText(totalAmount);
-        
-        holder.itemView.setOnClickListener(view -> {
+        holder.receiptListItem.setOnClickListener(view -> {
+            System.out.println("nigga");
             Toast.makeText(context, "pressed", Toast.LENGTH_SHORT).show();
+
+
+            
         });
     }
 
@@ -62,6 +68,7 @@ public class ReceiptsListAdapter extends RecyclerView.Adapter<ReceiptsListAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
+        RelativeLayout receiptListItem;
         TextView storeNameAddressTextView, receiptDateTextView, receiptTotalTextView;
 
 
@@ -70,7 +77,7 @@ public class ReceiptsListAdapter extends RecyclerView.Adapter<ReceiptsListAdapte
             storeNameAddressTextView = itemView.findViewById(R.id.storeName);
             receiptDateTextView = itemView.findViewById(R.id.receiptDate);
             receiptTotalTextView = itemView.findViewById(R.id.receiptTotalAmount);
-            
+            receiptListItem = itemView.findViewById(R.id.receiptListElement);
         }
     }
 

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/receiptListElement"
     android:layout_width="match_parent"
     android:layout_height="?attr/listPreferredItemHeightLarge"
     app:cardCornerRadius="5dp"
-    app:cardElevation="5dp"
-    >
+    app:cardElevation="5dp">
 
 
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
->
+        >
 
         <RelativeLayout
+            android:id="@+id/receiptListElement"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

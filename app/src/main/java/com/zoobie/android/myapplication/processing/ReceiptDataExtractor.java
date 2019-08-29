@@ -116,7 +116,6 @@ public class ReceiptDataExtractor {
         return productsList;
     }
 
-    //Todo FIX THIS ASAP fixed
     private ArrayList<Product> getProductsList() {
         ArrayList<Product> products = new ArrayList<>();
         TreeSet<Integer> nameKeys = new TreeSet<>(namesMap.keySet());
