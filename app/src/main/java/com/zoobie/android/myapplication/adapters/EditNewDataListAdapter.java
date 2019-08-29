@@ -100,7 +100,6 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
 //            TextView textView = v.findViewById(R.id.productNameTextView);
 //            Toast.makeText(context, "longClicked " + textView.getText().toString(), Toast.LENGTH_SHORT).show();
             showEditProductDialog(v,position);
-
             return true;
         });
     }
@@ -143,6 +142,7 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
             products.get(position).setPrice(Float.parseFloat(priceEditText.getText().toString()));
             this.notifyItemChanged(position);
             editProductDataDialog.dismiss();
+            
         });
 
 

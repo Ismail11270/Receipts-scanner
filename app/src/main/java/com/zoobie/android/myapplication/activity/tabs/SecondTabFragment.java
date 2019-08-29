@@ -67,6 +67,7 @@ public class SecondTabFragment extends Fragment {
             Intent intent = new Intent(getContext(), ReceiptScanner.class);
             intent.putExtra("source", ReceiptScanner.PICK_CAMERA);
             startActivityForResult(intent, REQUEST_CODE_ADD_NEW_RECEIPT);
+
         });
     }
 

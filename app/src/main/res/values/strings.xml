@@ -30,6 +30,12 @@
         <item name="AZN">AZN</item>
         <item name="EUR">EUR</item>
     </string-array>
+    
+    <string-array name="store_names">
+        <item name="neptun">Neptun</item>
+        <item name="bravo">Bravo</item>
+        <item name="araz">Araz Supermarket</item>
+    </string-array>
 
 
 </resources>

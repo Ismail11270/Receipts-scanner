@@ -93,29 +93,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Exit Application?");
-        alertDialogBuilder
+        new AlertDialog.Builder(this)
+                .setTitle("Exit Application?")
                 .setMessage("Click yes to exit!")
-                .setCancelable(false)
+                .setCancelable(true)
                 .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                moveTaskToBack(true);
-                                android.os.Process.killProcess(android.os.Process.myPid());
-                                System.exit(1);
-                            }
+                        (dialog, id) -> {
+                            moveTaskToBack(true);
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                            System.exit(1);
                         })
-
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+                .setNegativeButton("No", (dialog, id) -> dialog.dismiss())
+                .create().show();
     }
 
 

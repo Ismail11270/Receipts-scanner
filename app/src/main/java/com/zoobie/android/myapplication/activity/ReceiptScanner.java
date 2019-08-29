@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,8 +24,17 @@ import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.Frame;
@@ -36,7 +46,6 @@ import com.zoobie.android.myapplication.R;
 import com.zoobie.android.myapplication.adapters.EditNewDataListAdapter;
 import com.zoobie.android.myapplication.market.data.Product;
 import com.zoobie.android.myapplication.market.shops.Market;
-import com.zoobie.android.myapplication.market.shops.Neptun;
 import com.zoobie.android.myapplication.processing.ReceiptDataExtractor;
 
 import java.util.ArrayList;
@@ -63,8 +72,9 @@ public class ReceiptScanner extends AppCompatActivity {
     private Intent intent;
     private Uri image_uri;
     private Market market;
+    private LinearLayout parentView;
     private ArrayList<Product> scannedProductsList;
-
+    private Spinner selectStoreSpinner;
     private void initFields() {
         recyclerView = findViewById(R.id.products_edit_rv);
         intent = getIntent();
@@ -72,7 +82,7 @@ public class ReceiptScanner extends AppCompatActivity {
         toolbar = findViewById(R.id.toolBar);
         toolbar.setSubtitle("Edit & Save");
         toolbar.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
+        parentView = findViewById(R.id.newProductsListLayout);
         setSupportActionBar(toolbar);
         setTitle("New Receipt");
         cameraPermission = new String[]{
@@ -174,19 +184,73 @@ public class ReceiptScanner extends AppCompatActivity {
     private void recognizeText(Frame frame, TextRecognizer recognizer) {
         SparseArray<TextBlock> items = recognizer.detect(frame);
         //ToDO let user choose market, neptun by default now
-        market = new Neptun();
-        ReceiptDataExtractor extractor = new ReceiptDataExtractor(items, market);
-        scannedProductsList = new ArrayList<>();
-
-        try {
-            scannedProductsList = extractor.extractProducts();
-        } catch (Exception e) {
-            e.printStackTrace();
-            onBackPressed();
-            Toast.makeText(this, "Failed to recognize, please try again", Toast.LENGTH_SHORT).show();
-        }
+        intiateStoreSelectDialog(items);
 //        for(Product product : scannedProductsList) System.out.println(product);
 
+    }
+
+    private void intiateStoreSelectDialog(SparseArray<TextBlock> items) {
+
+        parentView.setVisibility(View.INVISIBLE);
+
+        Dialog storeSelectionDialog = new Dialog(this);
+        storeSelectionDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        storeSelectionDialog.setCancelable(false);
+        storeSelectionDialog.setContentView(R.layout.select_store_dialog);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(storeSelectionDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+
+        TextView title = storeSelectionDialog.findViewById(R.id.dialogTitle);
+        title.setText("Receipt Scan");
+
+        Button selectBtn = storeSelectionDialog.findViewById(R.id.dialogSaveBtn);
+        selectBtn.setText("Select");
+
+        ImageButton cancelBtn = storeSelectionDialog.findViewById(R.id.dialogCancelBtn);
+        cancelBtn.setOnClickListener(v ->{
+            storeSelectionDialog.dismiss();
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        });
+        selectStoreSpinner = storeSelectionDialog.findViewById(R.id.selectStoreSpinner);
+
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,R.array.store_names,android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selectStoreSpinner.setAdapter(adapter1);
+
+        selectStoreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                System.out.println(position + " nigga");
+                market = Market.getInstance(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        selectBtn.setOnClickListener(view -> {
+            ReceiptDataExtractor extractor = new ReceiptDataExtractor(items, market);
+            scannedProductsList = new ArrayList<>();
+            try {
+                scannedProductsList = extractor.extractProducts();
+                storeSelectionDialog.dismiss();
+                initRecyclerView();
+                parentView.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                onBackPressed();
+                Toast.makeText(getApplicationContext()
+                        , "Failed to recognize, please try again", Toast.LENGTH_SHORT).show();
+            }
+        });
+        storeSelectionDialog.show();
+        storeSelectionDialog.getWindow().setAttributes(lp);
     }
 
 
@@ -291,7 +355,6 @@ public class ReceiptScanner extends AppCompatActivity {
                 } else {
                     Frame frame = new Frame.Builder().setBitmap(bitmap).build();
                     recognizeText(frame, recognizer);
-                    initRecyclerView();
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 //if there is any error show it
@@ -308,10 +371,13 @@ public class ReceiptScanner extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finishActivity(0);
+    }
 }
 
 
