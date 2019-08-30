@@ -6,14 +6,17 @@
         android:title="New Image"
         app:showAsAction="always"
         android:icon="@drawable/ic_action_image"/>
-    <item
-        android:id="@+id/settings"
-        android:title="Settings"
-        />
+
 
     <item
         android:id="@+id/save_data"
         android:icon="@android:drawable/ic_menu_save"
         android:title="Save Data"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/cancel"
+        app:showAsAction="always"
+        android:title="Settings"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        />
 </menu>

@@ -9,7 +9,7 @@
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />
     <item
-        android:id="@+id/settings"
+        android:id="@+id/cancel"
         android:title="@string/settings"
         />
 

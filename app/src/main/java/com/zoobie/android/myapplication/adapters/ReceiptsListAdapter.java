@@ -1,6 +1,7 @@
 package com.zoobie.android.myapplication.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.zoobie.android.myapplication.activity.MainActivity;
 import com.zoobie.android.myapplication.R;
+import com.zoobie.android.myapplication.activity.ReceiptScanner;
+import com.zoobie.android.myapplication.market.data.Product;
 import com.zoobie.android.myapplication.market.data.Receipt;
 import com.zoobie.android.myapplication.market.shops.ShopsData;
 
@@ -54,11 +57,12 @@ public class ReceiptsListAdapter extends RecyclerView.Adapter<ReceiptsListAdapte
         String totalAmount = receipt.getTotal() + " " + MainActivity.currency.getDisplayName();
         holder.receiptTotalTextView.setText(totalAmount);
         holder.receiptListItem.setOnClickListener(view -> {
-            System.out.println("nigga");
-            Toast.makeText(context, "pressed", Toast.LENGTH_SHORT).show();
-
-
-            
+            Toast.makeText(context, "Loading receipt data", Toast.LENGTH_SHORT).show();
+            Intent loadReceiptIntent = new Intent(context,ReceiptScanner.class);
+            System.out.println(receipt.getRowid() + " row id");
+            loadReceiptIntent.putExtra("receipt_id",receipt.getRowid());
+            loadReceiptIntent.putExtra("new",false);
+            context.startActivity(loadReceiptIntent);
         });
     }
 
@@ -71,8 +75,7 @@ public class ReceiptsListAdapter extends RecyclerView.Adapter<ReceiptsListAdapte
         RelativeLayout receiptListItem;
         TextView storeNameAddressTextView, receiptDateTextView, receiptTotalTextView;
 
-
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             storeNameAddressTextView = itemView.findViewById(R.id.storeName);
             receiptDateTextView = itemView.findViewById(R.id.receiptDate);

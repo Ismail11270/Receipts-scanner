@@ -43,7 +43,7 @@ public class FirstTabFragment extends Fragment {
         showPurchasesBtn = view.findViewById(R.id.showpurchasesbtn);
         showPurchasesBtn.setOnClickListener(v -> {
             ProductsDB db = new ProductsDB(getContext());
-            ArrayList<Receipt> receipts = db.getEveryPurchase();
+            ArrayList<Receipt> receipts = db.getEveryReceipt();
             if (receipts.size() > 0)
                 textView.setText(receipts.toString());
             else Toast.makeText(getContext(), "Not purchases yet", Toast.LENGTH_SHORT).show();

@@ -42,10 +42,18 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
     private Context context;
     private Boolean editable = false;
     private Market market;
-
+    private Receipt receipt;
+    private Boolean isNewReceipt;
     public EditNewDataListAdapter(ArrayList<Product> products, Context context) {
         this.products = products;
         this.context = context;
+        isNewReceipt = true;
+    }
+
+    public EditNewDataListAdapter(ArrayList<Product> products, Context context, Receipt receipt){
+        this(products,context);
+        this.receipt = receipt;
+        isNewReceipt = false;
     }
 
     @NonNull
@@ -135,14 +143,13 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
 
 
         cancelBtn.setOnClickListener(v -> editProductDataDialog.dismiss());
-
+        if(receipt!=null) saveBtn.setText("UPDATE");
         saveBtn.setOnClickListener(v -> {
             products.get(position).setAmount(Float.parseFloat(amountEditText.getText().toString()));
             products.get(position).setName(productNameEditText.getText().toString());
             products.get(position).setPrice(Float.parseFloat(priceEditText.getText().toString()));
             this.notifyItemChanged(position);
             editProductDataDialog.dismiss();
-            
         });
 
 
@@ -189,8 +196,32 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
+        String title = "New Receipt";
+        String storeName = ShopsData.getShopName(market.getId());
+        String address = "";
+        String description = "";
+        Calendar calendar = Calendar.getInstance();
+        int mYear = calendar.get(Calendar.YEAR);
+        int mMonth = calendar.get(Calendar.MONTH);
+        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+        int mHour = calendar.get(Calendar.HOUR);
+        int mMinute = calendar.get(Calendar.MINUTE);
+
+        if(!isNewReceipt){
+            title = "Updating Receipt";
+            address = market.getAddress();
+            description = receipt.getDescription();
+
+            calendar.setTimeInMillis(receipt.getDate().getTime());
+            mYear = calendar.get(Calendar.YEAR);
+            mMonth = calendar.get(Calendar.MONTH);
+            mDay = calendar.get(Calendar.DAY_OF_MONTH);
+            mHour = calendar.get(Calendar.HOUR);
+            mMinute = calendar.get(Calendar.MINUTE);
+        }
+
         TextView dialogTitle = dialog.findViewById(R.id.dialogTitle);
-        dialogTitle.setText(R.string.dialog_title_new_purchase);
+        dialogTitle.setText(title);
 
 
         ImageButton newDateBtn = dialog.findViewById(R.id.editDateBtn);
@@ -202,22 +233,24 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
         EditText commentEditText = dialog.findViewById(R.id.newPurchaseComment);
         EditText nameEditText = dialog.findViewById(R.id.newPurchaseShopName);
         EditText addressEditText = dialog.findViewById(R.id.newPurchaseShopAddress);
-
+        commentEditText.setText(description);
+        addressEditText.setText(address);
         Button saveBtn = dialog.findViewById(R.id.dialogSaveBtn);
         ImageButton cancelBtn = dialog.findViewById(R.id.dialogCancelBtn);
 
-        timeTextView.setText("06:30");
-        final Calendar calendar = Calendar.getInstance();
-        int mYear = calendar.get(Calendar.YEAR);
-        int mMonth = calendar.get(Calendar.MONTH);
-        int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-        dateTextView.setText(mDay + "." + mMonth + "." + mYear);
+        timeTextView.setText(mHour + ":" + mDay);
 
+        dateTextView.setText(mDay + "-" + mMonth + "-" + mYear);
+
+        if(!isNewReceipt){
+            nameEditText.setEnabled(false);
+            addressEditText.setEnabled(false);
+        }
         commentEditText.setHint("Write a description of the purchase here...");
         nameEditText.setText(ShopsData.getShopName(market.getId()));
 
         saveBtn.setOnClickListener(view -> {
-            String dateString[] = dateTextView.getText().toString().split("[.]");
+            String dateString[] = dateTextView.getText().toString().split("[-]");
             String timeString[] = timeTextView.getText().toString().split("[:]");
             int hour = Integer.parseInt(timeString[0]);
             int minute = Integer.parseInt(timeString[1]);
@@ -226,12 +259,19 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
             int day = Integer.parseInt(dateString[0]);
             calendar.set(year, month, day, hour, minute);
             Timestamp date = new Timestamp(calendar.getTimeInMillis());
-            Receipt receipt = new Receipt(
+            Receipt newReceipt = new Receipt(
                     0, market.getId(), date, addressEditText.getText().toString(),
                     commentEditText.getText().toString(), products);
             System.out.println(products.toString());
             ProductsDB db = new ProductsDB(context);
-            db.addNewShopping(receipt);
+            if(isNewReceipt) {
+                db.addNewShopping(newReceipt);
+            }else{
+                newReceipt.setRowid(receipt.getRowid());
+
+//                db.addNewShopping(receipt);
+                db.updateReceiptData(newReceipt);
+            }
             Intent intent = new Intent(context, MainActivity.class);
             intent.putExtra("page", 1);
             context.startActivity(intent);
@@ -240,21 +280,21 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
         newDateBtn.setOnClickListener(view -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(context,
                     (datePicker, year, month, day) -> {
-                        String date1 = day + "." + month + "." + year;
+                        String date1 = day + "-" + month + "-" + year;
                         dateTextView.setText(date1);
                     }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
             datePickerDialog.show();
         });
         newTimeBtn.setOnClickListener(view -> {
-            int mHour = calendar.get(Calendar.HOUR);
-            int mMinute = calendar.get(Calendar.MINUTE);
+            int Hour = calendar.get(Calendar.HOUR);
+            int Minute = calendar.get(Calendar.MINUTE);
 
             new TimePickerDialog(context,
                     (timePicker, hour, minute) -> {
                         String time1 = hour + ":" + minute;
                         timeTextView.setText(time1);
-                    }, mHour, mMinute, true).show();
+                    }, Hour, Minute, true).show();
         });
         dialog.show();
         dialog.getWindow().setAttributes(lp);

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zoobie.android.myapplication.R;
@@ -28,12 +29,13 @@ import java.util.ArrayList;
 public class SecondTabFragment extends Fragment {
 
 
-    Resources res;
-    ArrayList<Product> productsList;
-    FloatingActionButton addFab, galleryFab, cameraFab;
-    View galleryView, cameraView;
-    ReceiptsListAdapter adapter;
-    RecyclerView recyclerView;
+    private Resources res;
+    private ArrayList<Product> productsList;
+    private FloatingActionButton addFab, galleryFab, cameraFab;
+    private View galleryView, cameraView;
+    private ReceiptsListAdapter adapter;
+    private RecyclerView recyclerView;
+    private RelativeLayout noItemLayout;
     final int REQUEST_CODE_ADD_NEW_RECEIPT = 101;
     private boolean fabActive = false;
 
@@ -58,12 +60,12 @@ public class SecondTabFragment extends Fragment {
         addFab.setOnClickListener((v) -> {
             handleFab();
         });
-        galleryFab.setOnClickListener((v)->{
+        galleryFab.setOnClickListener((v) -> {
             Intent intent = new Intent(getContext(), ReceiptScanner.class);
             intent.putExtra("source", ReceiptScanner.PICK_GALLERY);
             startActivityForResult(intent, REQUEST_CODE_ADD_NEW_RECEIPT);
         });
-        cameraFab.setOnClickListener((v)->{
+        cameraFab.setOnClickListener((v) -> {
             Intent intent = new Intent(getContext(), ReceiptScanner.class);
             intent.putExtra("source", ReceiptScanner.PICK_CAMERA);
             startActivityForResult(intent, REQUEST_CODE_ADD_NEW_RECEIPT);
@@ -75,6 +77,9 @@ public class SecondTabFragment extends Fragment {
     public void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
+
+        if (adapter.getItemCount() > 0) noItemLayout.setVisibility(View.GONE);
+        else noItemLayout.setVisibility(View.VISIBLE);
         if (fabActive) {
             addFab.animate().rotation(45.f + 180.f).setDuration(0);
             fabActive = true;
@@ -122,7 +127,7 @@ public class SecondTabFragment extends Fragment {
         v.setAlpha(0.f);
     }
 
-    private void hideViews(View v){
+    private void hideViews(View v) {
 
         v.setAlpha(1f);
         v.setTranslationY(0);
@@ -150,13 +155,16 @@ public class SecondTabFragment extends Fragment {
         cameraView = view.findViewById(R.id.add_from_camera_view);
         productsList = new ArrayList<>();
         recyclerView = view.findViewById(R.id.receiptsRecyclerView);
+        noItemLayout = view.findViewById(R.id.no_data_layout);
         res = getResources();
     }
 
     private void initializeRecyclerView() {
         ProductsDB db = new ProductsDB(getContext());
-        ArrayList<Receipt> listOfReceipts = db.getEveryPurchase();
-        adapter = new ReceiptsListAdapter(getContext(),listOfReceipts);
+        ArrayList<Receipt> listOfReceipts = db.getEveryReceipt();
+        if (listOfReceipts.size() == 0) noItemLayout.setVisibility(View.VISIBLE);
+        else noItemLayout.setVisibility(View.GONE);
+        adapter = new ReceiptsListAdapter(getContext(), listOfReceipts);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

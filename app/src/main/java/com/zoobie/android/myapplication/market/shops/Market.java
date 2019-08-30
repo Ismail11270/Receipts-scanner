@@ -4,24 +4,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public interface Market {
-      ArrayList<String> getProductNameKeywords();
+    ArrayList<String> getProductNameKeywords();
 
-      ArrayList<String> getProductAmountKeywords();
+    ArrayList<String> getProductAmountKeywords();
 
-      ArrayList<String> getProductPriceKeywords();
+    ArrayList<String> getProductPriceKeywords();
 
-      ArrayList<String> getLowerLimitKeywords();
+    ArrayList<String> getLowerLimitKeywords();
 
-      int getId();
+    String getAddress();
+    int getId();
 
-     static Market getInstance(int id) {
+    static Market getInstance(int id, String address) {
         switch (id) {
             case Neptun.ID:
-                return new Neptun();
+                return new Neptun(address);
             case Bravo.ID:
-                return new Bravo();
+                return new Bravo(address);
             case Araz.ID:
-                return new Araz();
+                return new Araz(address);
             default:
                 return null;
         }
@@ -35,6 +36,15 @@ public interface Market {
         private final String PRODUCT_PRICE_KEYWORDS[] = {"qiy", "qly", "qiy.", "qly.", "qy", "aiy.", "aiy", "aly.", "aly"};
         //ToDO: Make the data extractor recognize table end
         private final String LOWER_LIMIT_KEYWORDS[] = {"TOPKDV"};
+        private String address;
+
+        public Neptun(String address) {
+            this.address = address;
+        }
+
+        public String getAddress() {
+            return address;
+        }
 
         public int getId() {
             return ID;
@@ -60,29 +70,39 @@ public interface Market {
             return new ArrayList<>(Arrays.asList(LOWER_LIMIT_KEYWORDS));
         }
     }
+
     //todo setup bravo
     class Bravo implements Market {
 
         public static final int ID = ShopsData.BRAVO_ID;
+        private String address;
+
+        public Bravo(String address) {
+            this.address = address;
+        }
+
+        public String getAddress() {
+            return address;
+        }
 
         @Override
         public ArrayList<String> getProductNameKeywords() {
-            return new ArrayList<String>(Arrays.asList("1","2"));
+            return new ArrayList<String>(Arrays.asList("1", "2"));
         }
 
         @Override
         public ArrayList<String> getProductAmountKeywords() {
-            return new ArrayList<String>(Arrays.asList("1","2"));
+            return new ArrayList<String>(Arrays.asList("1", "2"));
         }
 
         @Override
         public ArrayList<String> getProductPriceKeywords() {
-            return new ArrayList<String>(Arrays.asList("1","2"));
+            return new ArrayList<String>(Arrays.asList("1", "2"));
         }
 
         @Override
         public ArrayList<String> getLowerLimitKeywords() {
-            return new ArrayList<String>(Arrays.asList("1","2"));
+            return new ArrayList<String>(Arrays.asList("1", "2"));
         }
 
         @Override
@@ -90,9 +110,19 @@ public interface Market {
             return ID;
         }
     }
+
     //Todo Setup araz
     class Araz implements Market {
         public final static int ID = ShopsData.ARAZ_ID;
+        private String address;
+
+        public Araz(String address) {
+            this.address = address;
+        }
+
+        public String getAddress() {
+            return address;
+        }
 
         @Override
         public ArrayList<String> getProductNameKeywords() {

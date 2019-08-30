@@ -1,6 +1,9 @@
 package com.zoobie.android.myapplication.market.data;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.Nullable;
 
 import com.zoobie.android.myapplication.market.shops.Currency;
@@ -49,6 +52,18 @@ public class Receipt {
     private float total;
     private Currency currency;
     private int uniqueStoreId;
+    private int rowid;
+    public int getID() {
+        return ID;
+    }
+
+    public int getRowid() {
+        return rowid;
+    }
+
+    public void setRowid(int rowid) {
+        this.rowid = rowid;
+    }
 
     public Receipt(int ID, int STORE_ID, Timestamp date, String address, String description, ArrayList<Product> products) {
         this.type = PurchaseType.SHOPPING;
@@ -61,7 +76,11 @@ public class Receipt {
         this.total = 0;
     }
 
-    public Receipt(int uniqueStoreId, int storeId, Timestamp date, String address, String comment, float total){
+    public int getUniqueStoreId(){
+        return uniqueStoreId;
+    }
+    public Receipt(int rowid, int uniqueStoreId, int storeId, Timestamp date, String address, String comment, float total){
+        this.rowid = rowid;
         this.uniqueStoreId = uniqueStoreId;
         this.type = PurchaseType.SHOPPING;
         this.STORE_ID=storeId;
@@ -79,6 +98,7 @@ public class Receipt {
                 description + " " +
                 total + "$";
     }
+
 
     public enum PurchaseType {
         SHOPPING,

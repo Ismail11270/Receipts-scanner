@@ -63,7 +63,7 @@ public class ReceiptDataExtractor {
         }
     }
 
-
+        //todo add bottom table borders check
     public ArrayList<Product> extractProducts() throws NullPointerException {
         if (productName == null || productAmount == null || productPrice == null)
             throw new NullPointerException("Failed to recognize data. Columns undetected");
