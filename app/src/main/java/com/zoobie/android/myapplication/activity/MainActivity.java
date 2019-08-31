@@ -13,6 +13,7 @@ import android.view.WindowManager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.zoobie.android.myapplication.R;
+import com.zoobie.android.myapplication.activity.tabs.SecondTabFragment;
 import com.zoobie.android.myapplication.adapters.ViewPagerAdapter;
 import com.zoobie.android.myapplication.market.shops.Currency;
 
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -55,15 +55,15 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         };
         viewPager = findViewById(R.id.pager);
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(),viewPager);
         viewPager.setAdapter(adapter);
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        onResume();
         requestCameraPermission();
         requestStoragePermission();
-
 
 //        settingsDataSp = this.getSharedPreferences("com.zoobie.android.myapplication", MODE_PRIVATE);
 //        currency = Currency.getCurrencyFromId(settingsDataSp.getInt("currency", Currency.DEFAULT_CURRENCY.id));
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         System.out.println("RESUME");
         Intent intent = getIntent();
-        int a = intent.getIntExtra("page", 0);
+        int a = intent.getIntExtra("page", 1);
         TabLayout.Tab tab = tabLayout.getTabAt(a);
         tab.select();
     }

@@ -5,9 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/grey_10"
-    android:orientation="vertical"
     tools:context=".activity.tabs.SecondTabFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_10"
+        android:orientation="vertical">
 
     <!-- TODO: List receipts-->
     <androidx.recyclerview.widget.RecyclerView
@@ -16,7 +19,15 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         />
-
+    <View
+        android:id="@+id/fabActiveView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        android:clickable="true"
+        android:fitsSystemWindows="true"
+        android:visibility="gone"
+        />
     <RelativeLayout
         android:id="@+id/no_data_layout"
         android:visibility="gone"
@@ -46,7 +57,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="end|bottom">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true">
         <LinearLayout
             android:id="@+id/add_from_camera_view"
             android:layout_width="wrap_content"
@@ -120,7 +132,13 @@
             android:src="@android:drawable/ic_input_add" />
 
     </LinearLayout>
+    </RelativeLayout>
 
-
+    <FrameLayout
+    android:id="@+id/bottomDialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

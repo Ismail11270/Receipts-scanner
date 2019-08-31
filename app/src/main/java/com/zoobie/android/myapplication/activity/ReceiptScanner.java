@@ -354,7 +354,7 @@ public class ReceiptScanner extends AppCompatActivity {
                         .setGuidelines(CropImageView.Guidelines.ON) //enable image guidelines
                         .start(this);
             }
-        }
+        } else if (resultCode == RESULT_CANCELED) onBackPressed();
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
@@ -378,7 +378,7 @@ public class ReceiptScanner extends AppCompatActivity {
                 Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
             }
 
-        } else if (resultCode == RESULT_CANCELED) onBackPressed();
+        }
 
     }
 

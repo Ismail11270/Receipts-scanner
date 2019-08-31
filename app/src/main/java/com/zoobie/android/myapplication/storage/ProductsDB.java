@@ -87,7 +87,7 @@ public class ProductsDB {
         int temp = (int)(total*100);
         total = (float)temp / 100;
 
-        db.execSQL("UPDATE shoppings SET date="+date+", comment='"+comment+"', total="+total);
+        db.execSQL("UPDATE shoppings SET date="+date+", comment='"+comment+"', total="+total+" WHERE rowid="+rowid);
     }
 
     private void deleteProductsForReceipt(int receiptId) {
@@ -194,5 +194,13 @@ public class ProductsDB {
     }
 
 
+    public void removeReceipt(Receipt receipt) {
+        int receiptId = receipt.getRowid();
+        deleteProductsForReceipt(receiptId);
+        deleteReceipt(receiptId);
+    }
 
+    private void deleteReceipt(int receiptId) {
+        db.execSQL("DELETE FROM shoppings WHERE rowid="+receiptId);
+    }
 }
