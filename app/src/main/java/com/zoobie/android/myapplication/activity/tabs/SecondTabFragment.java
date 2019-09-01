@@ -55,44 +55,46 @@ public class SecondTabFragment extends Fragment {
     private boolean fabActive = false;
 
     private ViewPager viewPager;
-    public SecondTabFragment(){
+
+    public SecondTabFragment() {
 
     }
-    public SecondTabFragment(ViewPager viewPager) {
-        this.viewPager = viewPager;
-    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_second_tab, container, false);
+        viewPager = container.getRootView().findViewById(R.id.pager);
         initializeViews(view);
         initializeFabs();
         initializeRecyclerView();
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
+            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            @Override
-            public void onPageSelected(int position) {
-                if(position!=1) {
-                    initHiddenViews(cameraView);
-                    initHiddenViews(galleryView);
-                    addFab.setRotation(0);
-                    fabActive = false;
-                    addFab.animate().alpha(0).setDuration(300).start();
-                }else {
-                    addFab.animate().alpha(1).setDuration(1000).start();
                 }
-            }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
+                @Override
+                public void onPageSelected(int position) {
+                    if (position != 1) {
+                        initHiddenViews(cameraView);
+                        initHiddenViews(galleryView);
+                        addFab.setRotation(0);
+                        fabActive = false;
+                        addFab.animate().alpha(0).setDuration(300).start();
+                    } else {
+                        addFab.animate().alpha(1).setDuration(1000).start();
+                    }
+                }
 
-            }
-        });
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
         return view;
     }
 
@@ -221,7 +223,7 @@ public class SecondTabFragment extends Fragment {
         ArrayList<Receipt> listOfReceipts = db.getEveryReceipt();
         if (listOfReceipts.size() == 0) noItemLayout.setVisibility(View.VISIBLE);
         else noItemLayout.setVisibility(View.GONE);
-        adapter = new ReceiptsListAdapter(getContext(), listOfReceipts, noItemLayout,bottomSheetDialog);
+        adapter = new ReceiptsListAdapter(getContext(), listOfReceipts, noItemLayout, bottomSheetDialog);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

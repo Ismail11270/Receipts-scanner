@@ -14,10 +14,9 @@ import com.zoobie.android.myapplication.activity.tabs.ThirdTabFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    private ViewPager viewPager;
-    public ViewPagerAdapter(FragmentManager fm, ViewPager viewPager) {
+
+    public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.viewPager = viewPager;
     }
 
     @Override
@@ -27,7 +26,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         position++;
         Bundle bundle = new Bundle();
         if (position == 1) item = new FirstTabFragment();
-        else if(position == 2) item = new SecondTabFragment(viewPager);
+        else if(position == 2) item = new SecondTabFragment();
         else item = new ThirdTabFragment();
         bundle.putString("message", "" + position);
         bundle.putInt("id", position);

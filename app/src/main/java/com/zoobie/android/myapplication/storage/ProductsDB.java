@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import static android.content.Context.MODE_PRIVATE;
 import static com.zoobie.android.myapplication.market.shops.ShopsData.getShopName;
 
+
+//ToDo fix db
 public class ProductsDB {
     SQLiteDatabase db;
     Context context;

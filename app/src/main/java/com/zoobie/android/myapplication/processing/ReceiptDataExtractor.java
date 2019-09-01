@@ -1,5 +1,7 @@
 package com.zoobie.android.myapplication.processing;
 
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -22,6 +24,7 @@ public class ReceiptDataExtractor {
     private Text productName;
     private Text productAmount;
     private Text productPrice;
+    private Text tableEnd;
     private TreeMap<Integer, Text> dataEntries;
     private List<Text> wordsList;
 
@@ -36,7 +39,8 @@ public class ReceiptDataExtractor {
         wordsList = new ArrayList<>();
         dataEntries = new TreeMap<>();
         dataEntries = new TreeMap<>();
-        boolean first = true, seconds = true, third = true;
+
+        boolean first = true, seconds = true, third = true, fourth = true;
         for (int i = 0; i < items.size(); i++) {
             TextBlock myItem = items.valueAt(i);
             for (Text line : myItem.getComponents()) {
@@ -55,15 +59,17 @@ public class ReceiptDataExtractor {
                         this.productPrice = word;
                         System.out.println(word.getValue() + " found ");
                         third = false;
-                    } else {
-                        wordsList.add(word);
-                    }
+                    } else if (market.getLowerLimitKeywords().contains(word.getValue().toLowerCase()) && fourth) {
+                        this.tableEnd = word;
+                        System.out.println(word.getValue() + " found");
+                        fourth = false;
+                    } else wordsList.add(word);
                 }
             }
         }
     }
 
-        //todo add bottom table borders check
+    //todo add bottom table borders check
     public ArrayList<Product> extractProducts() throws NullPointerException {
         if (productName == null || productAmount == null || productPrice == null)
             throw new NullPointerException("Failed to recognize data. Columns undetected");
@@ -82,6 +88,7 @@ public class ReceiptDataExtractor {
             Text tempName = null;
 
             for (Text word : line.getComponents()) {
+                if(tableEnd != null && word.getCornerPoints()[0].y >= tableEnd.getCornerPoints()[0].y - 20) break;
                 if (word.getCornerPoints()[1].x < productAmount.getCornerPoints()[0].x && word.getCornerPoints()[0].y > productName.getCornerPoints()[2].y) {
                     name += word.getValue() + " ";
                     foundName = true;
@@ -110,9 +117,6 @@ public class ReceiptDataExtractor {
         TreeSet<Integer> nameKeys = new TreeSet<>(namesMap.keySet());
         TreeSet<Integer> amountKeys = new TreeSet<>(amountsMap.keySet());
         TreeSet<Integer> priceKeys = new TreeSet<>(pricesMap.keySet());
-//        for(int i = 0; i < namesMap.size(); i++){
-//            System.out.println(namesMap.get(nameKeys.pollFirst()) + " " + amountsMap.get(amountKeys.pollFirst()) + " " + pricesMap.get(priceKeys.pollFirst()));
-//        }
         return productsList;
     }
 

@@ -107,12 +107,12 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
         holder.listElementCardView.setOnLongClickListener(v -> {
 //            TextView textView = v.findViewById(R.id.productNameTextView);
 //            Toast.makeText(context, "longClicked " + textView.getText().toString(), Toast.LENGTH_SHORT).show();
-            showEditProductDialog(v,position);
+            showEditProductDialog(position);
             return true;
         });
     }
 
-    private void showEditProductDialog(View clickedView, int position) {
+    private void showEditProductDialog(int position) {
         Dialog editProductDataDialog = new Dialog(context);
 
         editProductDataDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -161,6 +161,12 @@ public class EditNewDataListAdapter extends RecyclerView.Adapter<EditNewDataList
     @Override
     public int getItemCount() {
         return products.size();
+    }
+
+    public void createBlankProduct() {
+        products.add(new Product("Product",1.0f,1.0f));
+        notifyItemInserted(products.size() - 1);
+        showEditProductDialog(products.size() - 1);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

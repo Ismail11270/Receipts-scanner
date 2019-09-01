@@ -79,7 +79,7 @@ public class ReceiptScanner extends AppCompatActivity {
     private Receipt receipt;
     private ArrayList<Product> scannedProductsList;
     private Spinner selectStoreSpinner;
-
+    private boolean isNew;
     private void initFields() {
         recyclerView = findViewById(R.id.products_edit_rv);
         intent = getIntent();
@@ -103,7 +103,7 @@ public class ReceiptScanner extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_recognizer);
         initFields();
-        boolean isNew = intent.getBooleanExtra("new", true);
+        isNew = intent.getBooleanExtra("new", true);
         if (isNew) {
             recognize();
             System.out.println("NEW RECEIPT");
@@ -151,6 +151,7 @@ public class ReceiptScanner extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //inflate menu
         getMenuInflater().inflate(R.menu.new_receipt_menu, menu);
+        if(!isNew) menu.findItem(R.id.addImage).setEnabled(false);
         return true;
     }
 
@@ -165,6 +166,9 @@ public class ReceiptScanner extends AppCompatActivity {
         }
         if (id == R.id.save_data) {
              adapter.saveData(market);
+        }
+        if (id == R.id.addProduct){
+            adapter.createBlankProduct();
         }
         return super.onOptionsItemSelected(item);
     }
