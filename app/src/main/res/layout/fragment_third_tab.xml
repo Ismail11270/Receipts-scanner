@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.tabs.ThirdTabFragment"
-    android:background="@color/grey_10">
+    android:background="@color/gray1">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -13,6 +13,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="Products List is not yet avaliable!"
-        android:textColor="@color/amber_500"
+        android:textColor="@color/amber"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 </FrameLayout>

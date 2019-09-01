@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_10"
+    android:background="@color/gray1"
     tools:context=".activity.tabs.FirstTabFragment">
                 <TextView
                     android:id="@+id/fragment_textview"
@@ -12,6 +12,6 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/hello_blank_fragment"
-                    android:textColor="@color/amber_500"
+                    android:textColor="@color/amber"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 </FrameLayout>

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="@color/blue_grey_200"
+    android:background="@color/blue_gray_light"
     android:orientation="vertical">
     <View
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         android:layout_marginTop="20dp"
         android:text="Shop Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@color/red_500" />
+        android:textColor="@color/red2" />
 
     <TextView
         android:id="@+id/addressTextView"

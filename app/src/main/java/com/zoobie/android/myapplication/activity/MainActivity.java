@@ -13,7 +13,6 @@ import android.view.WindowManager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.zoobie.android.myapplication.R;
-import com.zoobie.android.myapplication.activity.tabs.SecondTabFragment;
 import com.zoobie.android.myapplication.adapters.ViewPagerAdapter;
 import com.zoobie.android.myapplication.market.shops.Currency;
 
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.orange_400));
+        window.setStatusBarColor(this.getResources().getColor(R.color.orange1));
         toolbar = findViewById(R.id.toolBar);
         toolbar.setNavigationIcon(R.drawable.navigation_icon);
         setSupportActionBar(toolbar);

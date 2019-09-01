@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:layout_marginTop="50dp"
-        android:textColor="@color/red_400"
+        android:textColor="@color/red1"
         android:text="Please select a store"/>
     <Spinner
         android:id="@+id/selectStoreSpinner"

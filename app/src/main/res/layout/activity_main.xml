@@ -15,7 +15,7 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/orange_400"
+        android:background="@color/orange1"
         android:minHeight="?attr/actionBarSize"
         app:tabGravity="fill"
         android:elevation="4dp"
