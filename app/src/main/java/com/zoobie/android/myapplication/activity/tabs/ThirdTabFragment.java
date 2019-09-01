@@ -23,12 +23,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FirstTabFragment extends Fragment {
+public class ThirdTabFragment extends Fragment {
 
     TextView textView;
     Button showPurchasesBtn;
 
-    public FirstTabFragment() {
+    public ThirdTabFragment() {
         // Required empty public constructor
     }
 
@@ -37,9 +37,9 @@ public class FirstTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_first_tab, container, false);
+        View view = inflater.inflate(R.layout.fragment_third_tab, container, false);
         textView = view.findViewById(R.id.fragment_textview);
-        textView.setText("Stats are not yet avaliable");
+
 
         return view;
     }

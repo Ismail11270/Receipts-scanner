@@ -6,11 +6,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.zoobie.android.myapplication.activity.tabs.FirstTabFragment;
 import com.zoobie.android.myapplication.activity.tabs.SecondTabFragment;
+import com.zoobie.android.myapplication.activity.tabs.ThirdTabFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
+
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -19,20 +22,22 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment item;
+
         position++;
         Bundle bundle = new Bundle();
         if (position == 1) item = new FirstTabFragment();
-        else item = new SecondTabFragment();
-
-        bundle.putString("message", "Fragment :" + position);
+        else if(position == 2) item = new SecondTabFragment();
+        else item = new ThirdTabFragment();
+        bundle.putString("message", "" + position);
         bundle.putInt("id", position);
         item.setArguments(bundle);
+        System.out.println(position + " POS");
         return item;
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable
@@ -42,8 +47,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         if (position == 1) {
             return "Stats";
-        } else {
+        } else if(position == 2){
             return "Receipts";
-        }
+        }else return "Products";
     }
+
+
 }

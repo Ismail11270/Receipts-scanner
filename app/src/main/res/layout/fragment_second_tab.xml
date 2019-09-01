@@ -1,27 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/grey_10"
-    android:orientation="vertical"
     tools:context=".activity.tabs.SecondTabFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray1"
+        android:orientation="vertical">
 
     <!-- TODO: List receipts-->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/receiptsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         />
+    <View
+        android:id="@+id/fabActiveView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        android:clickable="true"
+        android:fitsSystemWindows="true"
+        android:visibility="gone"
+        />
+    <RelativeLayout
+        android:id="@+id/no_data_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray1"
+        >
+
+
+        <!--TODO possibly add an image-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="120dp"
+            android:text="No Receipts Found\nPress the plus button below to add"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textAlignment="center"
+            android:lineSpacingExtra="10dp"
+            android:textColor="@color/gray"
+            />
+    </RelativeLayout>
     <!--Buttons-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="end|bottom">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true">
         <LinearLayout
             android:id="@+id/add_from_camera_view"
             android:layout_width="wrap_content"
@@ -45,7 +82,7 @@
                 android:src="@android:drawable/ic_menu_camera"
                 android:layout_gravity="center"
                 android:tint="@android:color/white"
-                app:backgroundTint="@color/orange_500"
+                app:backgroundTint="@color/orange2"
                 app:fabSize="mini"
                 android:layout_marginHorizontal="@dimen/spacing_smlarge"
                 app:rippleColor="@android:color/white" />
@@ -74,7 +111,7 @@
                 android:src="@android:drawable/ic_menu_gallery"
                 android:layout_gravity="center"
                 android:tint="@android:color/white"
-                app:backgroundTint="@color/orange_500"
+                app:backgroundTint="@color/orange2"
                 app:fabSize="mini"
                 android:layout_marginHorizontal="@dimen/spacing_smlarge"
                 app:rippleColor="@android:color/white" />
@@ -85,7 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tint="@android:color/white"
-            app:backgroundTint="@color/orange_500"
+            app:backgroundTint="@color/orange2"
             app:fabSize="normal"
             app:rippleColor="@android:color/white"
             android:layout_marginHorizontal="@dimen/spacing_smlarge"
@@ -95,9 +132,13 @@
             android:src="@android:drawable/ic_input_add" />
 
     </LinearLayout>
+    </RelativeLayout>
 
-
-
-
+    <FrameLayout
+    android:id="@+id/bottomDialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

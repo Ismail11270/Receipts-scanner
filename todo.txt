@@ -1,0 +1,29 @@
+ToDo add edit/creation date to receipts and order by it, add to list element layout
+
+
+ToDo 3 add Bravo and Araz markets for now
+
+ToDo Add Searching feature for receipts and products,
+        search receipts by name, shop, address, description keywords, date
+        search products by name, shop name, date
+
+ToDo  GRAPHS AND STATS
+
+
+ToDO 4 FIX DATABASE
+    {
+        1) Updating removes all the data instead of updating,
+            add a solution to detect if a product is deleted or updated and modify the db according to that
+        2) ---
+    }
+
+ToDo  Add PRODUCTS tab presenting all the products in the database
+
+
+ToDo  TRY to detect date, time, address & etc from the image
+
+ToDo  FIX MARKETS
+     {
+        1) Get rid of ShopsData class
+     }
+

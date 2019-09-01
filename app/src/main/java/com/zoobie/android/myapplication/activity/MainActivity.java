@@ -1,24 +1,16 @@
 package com.zoobie.android.myapplication.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SubMenu;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TableLayout;
-import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.zoobie.android.myapplication.R;
 import com.zoobie.android.myapplication.adapters.ViewPagerAdapter;
@@ -47,11 +39,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(this.getResources().getColor(R.color.orange_400));
+        window.setStatusBarColor(this.getResources().getColor(R.color.orange1));
         toolbar = findViewById(R.id.toolBar);
         toolbar.setNavigationIcon(R.drawable.navigation_icon);
         setSupportActionBar(toolbar);
@@ -69,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        onResume();
         requestCameraPermission();
         requestStoragePermission();
-
 
 //        settingsDataSp = this.getSharedPreferences("com.zoobie.android.myapplication", MODE_PRIVATE);
 //        currency = Currency.getCurrencyFromId(settingsDataSp.getInt("currency", Currency.DEFAULT_CURRENCY.id));
@@ -113,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         System.out.println("RESUME");
         Intent intent = getIntent();
-        int a = intent.getIntExtra("page", 0);
+        int a = intent.getIntExtra("page", 1);
         TabLayout.Tab tab = tabLayout.getTabAt(a);
         tab.select();
     }
@@ -133,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
-            case R.id.settings:
+            case R.id.cancel:
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
             case R.id.searchBtnMenu:

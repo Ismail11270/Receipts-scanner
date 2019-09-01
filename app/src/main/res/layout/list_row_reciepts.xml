@@ -35,7 +35,7 @@
                 android:paddingHorizontal="5dp"
                 android:text="01-01-1999 00:00"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/amber_500" />
+                android:textColor="@color/amber" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                 android:layout_below="@id/receiptDate"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="6dp"
-                android:background="@color/grey_500" />
+                android:background="@color/gray" />
         </RelativeLayout>
 
 

@@ -2,18 +2,33 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/addProduct"
+        android:icon="@android:drawable/ic_input_add"
+        app:showAsAction="always"
+        android:title="Add Product"
+        android:iconTint="@android:color/white"
+        />
+    <item
         android:id="@+id/addImage"
         android:title="New Image"
         app:showAsAction="always"
         android:icon="@drawable/ic_action_image"/>
-    <item
-        android:id="@+id/settings"
-        android:title="Settings"
-        />
+
 
     <item
         android:id="@+id/save_data"
         android:icon="@android:drawable/ic_menu_save"
         android:title="Save Data"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:iconTint="@android:color/white"
+        />
+    <item
+        android:id="@+id/cancel"
+        app:showAsAction="always"
+        android:title="Settings"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:iconTint="@android:color/white"
+        />
+
+
 </menu>

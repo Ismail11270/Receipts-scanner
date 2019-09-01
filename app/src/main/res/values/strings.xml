@@ -1,14 +1,7 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Receipts Scanner</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
-    <string-array name="products">
-        <item>Pomidor</item>
-        <item>Baklajan</item>
-        <item>Ogures</item>
-        <item>Makarok</item>
-        <item>Xleb</item>
-    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_product_name">Edit Product Name</string>
@@ -30,7 +23,7 @@
         <item name="AZN">AZN</item>
         <item name="EUR">EUR</item>
     </string-array>
-    
+
     <string-array name="store_names">
         <item name="neptun">Neptun</item>
         <item name="bravo">Bravo</item>

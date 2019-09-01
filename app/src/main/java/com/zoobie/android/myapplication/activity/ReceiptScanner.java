@@ -15,6 +15,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -45,8 +46,10 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import com.zoobie.android.myapplication.R;
 import com.zoobie.android.myapplication.adapters.EditNewDataListAdapter;
 import com.zoobie.android.myapplication.market.data.Product;
+import com.zoobie.android.myapplication.market.data.Receipt;
 import com.zoobie.android.myapplication.market.shops.Market;
 import com.zoobie.android.myapplication.processing.ReceiptDataExtractor;
+import com.zoobie.android.myapplication.storage.ProductsDB;
 
 import java.util.ArrayList;
 
@@ -73,8 +76,10 @@ public class ReceiptScanner extends AppCompatActivity {
     private Uri image_uri;
     private Market market;
     private LinearLayout parentView;
+    private Receipt receipt;
     private ArrayList<Product> scannedProductsList;
     private Spinner selectStoreSpinner;
+    private boolean isNew;
     private void initFields() {
         recyclerView = findViewById(R.id.products_edit_rv);
         intent = getIntent();
@@ -97,10 +102,24 @@ public class ReceiptScanner extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_recognizer);
-
         initFields();
-        recognize();
+        isNew = intent.getBooleanExtra("new", true);
+        if (isNew) {
+            recognize();
+            System.out.println("NEW RECEIPT");
 
+        } else {
+            int receiptId = intent.getIntExtra("receipt_id", -1);
+            if (receiptId < 0) throw new Resources.NotFoundException("The receipt not found");
+            else {
+                System.out.println("EDITING RECEIPT");
+                ProductsDB db = new ProductsDB(getApplicationContext());
+                receipt = db.getSingleReceipt(receiptId);
+                scannedProductsList = db.getProducts(receiptId);
+                market = db.queryStore(receipt.getUniqueStoreId());
+                initRecyclerView();
+            }
+        }
     }
 
     private void recognize() {
@@ -132,6 +151,7 @@ public class ReceiptScanner extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //inflate menu
         getMenuInflater().inflate(R.menu.new_receipt_menu, menu);
+        if(!isNew) menu.findItem(R.id.addImage).setEnabled(false);
         return true;
     }
 
@@ -141,11 +161,14 @@ public class ReceiptScanner extends AppCompatActivity {
         if (id == R.id.addImage) {
             showImageImportDialog();
         }
-        if (id == R.id.settings) {
-            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+        if (id == R.id.cancel) {
+            onBackPressed();
         }
         if (id == R.id.save_data) {
-            adapter.saveData(market);
+             adapter.saveData(market);
+        }
+        if (id == R.id.addProduct){
+            adapter.createBlankProduct();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -185,8 +208,6 @@ public class ReceiptScanner extends AppCompatActivity {
         SparseArray<TextBlock> items = recognizer.detect(frame);
         //ToDO let user choose market, neptun by default now
         intiateStoreSelectDialog(items);
-//        for(Product product : scannedProductsList) System.out.println(product);
-
     }
 
     private void intiateStoreSelectDialog(SparseArray<TextBlock> items) {
@@ -210,21 +231,21 @@ public class ReceiptScanner extends AppCompatActivity {
         selectBtn.setText("Select");
 
         ImageButton cancelBtn = storeSelectionDialog.findViewById(R.id.dialogCancelBtn);
-        cancelBtn.setOnClickListener(v ->{
+        cancelBtn.setOnClickListener(v -> {
             storeSelectionDialog.dismiss();
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         });
         selectStoreSpinner = storeSelectionDialog.findViewById(R.id.selectStoreSpinner);
 
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,R.array.store_names,android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.store_names, android.R.layout.simple_spinner_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectStoreSpinner.setAdapter(adapter1);
 
         selectStoreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                System.out.println(position + " nigga");
-                market = Market.getInstance(position);
+                market = Market.getInstance(position,"");
+                System.out.println(position + " MARKET");
             }
 
             @Override
@@ -256,9 +277,9 @@ public class ReceiptScanner extends AppCompatActivity {
 
     private void pickGallery() {
         //intent to choose pic from gallery
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, IMAGE_PICK_GALLERY_CODE);
     }
 
     private void pickCamera() {
@@ -338,7 +359,7 @@ public class ReceiptScanner extends AppCompatActivity {
                         .setGuidelines(CropImageView.Guidelines.ON) //enable image guidelines
                         .start(this);
             }
-        }
+        } else if (resultCode == RESULT_CANCELED) onBackPressed();
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
@@ -362,20 +383,30 @@ public class ReceiptScanner extends AppCompatActivity {
                 Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
             }
 
-        }else if(resultCode == RESULT_CANCELED) onBackPressed();
+        }
 
     }
 
     private void initRecyclerView() {
-        adapter = new EditNewDataListAdapter(scannedProductsList,this);
+        if (receipt == null)
+            adapter = new EditNewDataListAdapter(scannedProductsList, this);
+        else
+            adapter = new EditNewDataListAdapter(scannedProductsList, this, receipt);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        finishActivity(0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         finishActivity(0);
     }
 }

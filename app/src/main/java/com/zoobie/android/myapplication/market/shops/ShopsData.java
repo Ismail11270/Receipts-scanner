@@ -14,6 +14,10 @@ public class ShopsData {
         switch (id) {
             case NEPTUN_ID:
                 return "Neptun market";
+            case BRAVO_ID:
+                return "Bravo";
+            case ARAZ_ID:
+                return "Araz Supermarket";
             default:
                 return "Unknown market";
         }
