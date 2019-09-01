@@ -32,7 +32,7 @@ public interface Market {
         public final static int ID = ShopsData.NEPTUN_ID;
 
         private final String PRODUCT_NAME_KEYWORDS[] = {"mehsutun","mehsuiun","mehsulun","mehsuun", "mehsulunadi", "mehsulun adi"};
-        private final String PRODUCT_AMOUNT_KEYWORDS[] = {"miq", "mlq", "miq.", "mq", "mig", "mig."};
+        private final String PRODUCT_AMOUNT_KEYWORDS[] = {"miq", "mlq", "miq.", "mq", "mig", "mig.","mia"};
         private final String PRODUCT_PRICE_KEYWORDS[] = {"qiy", "qly", "qiy.", "qly.", "qy", "aiy.", "aiy", "aly.", "aly"};
         //ToDO: Make the data extractor recognize table end
         private final String LOWER_LIMIT_KEYWORDS[] = {"topkdv","toplam","topkddv"};
@@ -79,7 +79,7 @@ public interface Market {
         private String address;
 
         private final String[] PRODUCT_NAME_KEYWORDS = {"melhsuiun","mehsulun", "mehsulunadi", "mehsulun adi"};
-        private final String[] PRODUCT_AMOUNT_KEYWORDS = {"miq", "mlq", "miq.", "mq", "mig", "mig."};
+        private final String[] PRODUCT_AMOUNT_KEYWORDS = {"miq", "mlq", "miq.", "mq", "mig", "mig.","mia"};
         private final String[] PRODUCT_PRICE_KEYWORDS = {"qiy", "qly", "qiy.", "qly.", "qy", "aiy.", "aiy", "aly.", "aly"};
         private final String[] LOWER_LIMIT_KEYWORDS = { "yekun","yekun edv","yekunedv"};
 
@@ -121,7 +121,7 @@ public interface Market {
     class Araz implements Market {
         public final static int ID = ShopsData.ARAZ_ID;
         private final String[] PRODUCT_NAME_KEYWORDS = {"mehsutun","mehsuiun","melhsuiun","mehsulun","mehsuun", "mehsulunadi", "mehsulun adi"};
-        private final String[] PRODUCT_AMOUNT_KEYWORDS = {"mia","miq", "mlq", "miq.", "mq", "mig", "mig."};
+        private final String[] PRODUCT_AMOUNT_KEYWORDS = {"mia","miq", "mlq", "miq.", "mq", "mig", "mig.","mia"};
         private final String[] PRODUCT_PRICE_KEYWORDS = {"qiy", "qly", "qiy.", "qly.", "qy", "aiy.", "aiy", "aly.", "aly"};
         private final String[] LOWER_LIMIT_KEYWORDS = { "yekun","yekun edv","yekunedv"};
 
