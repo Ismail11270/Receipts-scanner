@@ -42,23 +42,15 @@ public class ReceiptsListAdapter extends RecyclerView.Adapter<ReceiptsListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Receipt receipt = receiptsList.get(position);
-
         String nameAndAdress = ShopsData.getShopName(receipt.getSTORE_ID()) + ", " + receipt.getAddress();
         holder.storeNameAddressTextView.setText(nameAndAdress);
-
         String dateTime[] = receipt.getDate().toString().split("[.]");
-
         holder.receiptDateTextView.setText(dateTime[0]);
-
-
         String totalAmount = receipt.getTotal() + " " + MainActivity.currency.getDisplayName();
         holder.receiptTotalTextView.setText(totalAmount);
         holder.receiptListItem.setOnClickListener(view -> {
             System.out.println("nigga");
             Toast.makeText(context, "pressed", Toast.LENGTH_SHORT).show();
-
-
-            
         });
     }
 
