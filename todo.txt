@@ -1,9 +1,5 @@
-ToDo 1 make bottom dialog showing small description of item
-        Viewing and editing receipt should be possible only by clicking it then selecting "VIEW/EDIT" in the bottom menu
+ToDo add edit/creation date to receipts and order by it, add to list element layout
 
-Todo return from cropper to main menu
-
-ToDo 2 add bottom constraints for receipt data extractor for NEPTUN and the rest
 
 ToDo 3 add Bravo and Araz markets for now
 
@@ -31,4 +27,3 @@ ToDo  FIX MARKETS
         1) Get rid of ShopsData class
      }
 
-ToDo add edit/creation date to receipts and order by it, add to list element layout
