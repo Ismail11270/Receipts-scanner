@@ -133,6 +133,20 @@ public class ProductsDB {
                 c.getString(commentCl), c.getFloat(totalCl));
     }
 
+    public ArrayList<Product> getEveryProduct(){
+        ArrayList<Product> products = new ArrayList<>();
+
+        Cursor c = db.rawQuery("SELECT * FROM purchases",null);
+        int productNameCl = c.getColumnIndex("product_name");
+        int productPriceCl = c.getColumnIndex("product_price");
+        int productAmountCl = c.getColumnIndex("product_amount");
+
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+            products.add(new Product(c.getString(productNameCl),c.getFloat(productAmountCl),c.getFloat(productPriceCl)));
+        }
+
+        return products;
+    }
     public ArrayList<Product> getProducts(int receiptId) {
         ArrayList<Product> productsList = new ArrayList<>();
 

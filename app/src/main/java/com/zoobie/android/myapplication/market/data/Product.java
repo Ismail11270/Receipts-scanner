@@ -1,5 +1,8 @@
 package com.zoobie.android.myapplication.market.data;
 
+
+
+//Todo 09.02 add products ids for ease of searching
 public class Product {
     private String name;
     private float amount;

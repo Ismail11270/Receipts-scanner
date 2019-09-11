@@ -15,4 +15,27 @@
         android:text="Products List is not yet avaliable!"
         android:textColor="@color/amber"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+    <ExpandableListView
+        android:id="@+id/productsParentList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    </ExpandableListView>
+
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addProductFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_input_add"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/spacing_smlarge"
+            />
+
+
+
 </FrameLayout>
