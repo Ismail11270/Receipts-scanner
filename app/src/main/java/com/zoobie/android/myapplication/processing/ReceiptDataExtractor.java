@@ -41,8 +41,10 @@ public class ReceiptDataExtractor {
         dataEntries = new TreeMap<>();
 
         boolean first = true, seconds = true, third = true, fourth = true;
+        System.out.println("========================================");
         for (int i = 0; i < items.size(); i++) {
             TextBlock myItem = items.valueAt(i);
+            System.out.println(myItem.toString());
             for (Text line : myItem.getComponents()) {
                 dataEntries.put(line.getCornerPoints()[0].y, line);
                 for (Text word : line.getComponents()) {
@@ -67,6 +69,8 @@ public class ReceiptDataExtractor {
                 }
             }
         }
+        System.out.println("========================================");
+
     }
 
     //todo add bottom table borders check

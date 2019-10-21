@@ -1,5 +1,7 @@
 ToDo add edit/creation date to receipts and order by it, add to list element layout
 
+2
+
 ToDo 3.09 add option of adding a receipt/product manually
 
 ToDo 3 add Bravo and Araz markets for now
